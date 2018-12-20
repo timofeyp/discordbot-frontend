@@ -1,0 +1,2 @@
+export const LOGIN_TO_SYSTEM = 'LOGIN_TO_SYSTEM'
+export const EXIT_FROM_SYSTEM = 'EXIT_FROM_SYSTEM'
