@@ -1,74 +1,65 @@
-import React, { Component } from 'react'
-import { BrowserRouter, Link, Route } from 'react-router-dom'
-import createBrowserHistory from "history/createBrowserHistory"
-import axios from 'axios'
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import '../styles/Login.css';
 
-const history = createBrowserHistory()
+class Login extends Component {
 
-class App extends Component {
-
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      books: []
+      username: 'AA',
+      password: 'DD',
+      message: 'VVVVV'
     };
   }
+  onChange = (e) => {
+    const state = this.state
+    state[e.target.name] = e.target.value;
+    this.setState(state);
+  }
 
-  componentDidMount() {
-    axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
-    axios.get('/api/get-reports-secure')
-      .then(res => {
-        this.setState({ books: res.data });
-        console.log(this.state.books);
+  onSubmit = (e) => {
+    e.preventDefault();
+
+    const { username, password } = this.state;
+
+    axios.post('/api/auth/login', { username, password })
+      .then((result) => {
+        localStorage.setItem('jwtToken', result.data.token);
+        this.setState({ message: '' });
+        this.props.history.push('/')
       })
       .catch((error) => {
         if(error.response.status === 401) {
-          this.props.history.push("/login");
+          this.setState({ message: 'Login failed. Username or password not match' });
         }
       });
   }
 
-  logout = () => {
-    localStorage.removeItem('jwtToken');
-    window.location.reload();
-  }
-
   render() {
+    const { username, password, message } = this.state;
     return (
       <div className="container">
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <h3 className="panel-title">
-              BOOK CATALOG &nbsp;
-              {localStorage.getItem('jwtToken') &&
-              <button class="btn btn-primary" onClick={this.logout}>Logout</button>
-              }
-            </h3>
+        <form className="form-signin" onSubmit={this.onSubmit}>
+          {message !== '' &&
+          <div className="alert alert-warning alert-dismissible" role="alert">
+            { message }
           </div>
-          <div className="panel-body">
-            <table className="table table-stripe">
-              <thead>
-              <tr>
-                <th>ISBN</th>
-                <th>Title</th>
-                <th>Author</th>
-              </tr>
-              </thead>
-              <tbody>
-              {this.state.books.map(book =>
-                <tr>
-                  <td><Link to={`/show/${book._id}`}>{book.isbn}</Link></td>
-                  <td>{book.title}</td>
-                  <td>{book.author}</td>
-                </tr>
-              )}
-              </tbody>
-            </table>
-          </div>
-        </div>
+          }
+          <h2 className="form-signin-heading">Please sign in</h2>
+          <label for="inputEmail" className="sr-only">Email address</label>
+          <input type="email" className="form-control" placeholder="Email address" name="username" value={username} onChange={this.onChange} required/>
+          <label for="inputPassword" className="sr-only">Password</label>
+          <input type="password" className="form-control" placeholder="Password" name="password" value={password} onChange={this.onChange} required/>
+          <button className="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+          <p>
+            Not a member? <Link to="/register"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Register here</Link>
+          </p>
+        </form>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default Login;
