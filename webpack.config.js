@@ -16,7 +16,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['storage-loader', 'css-loader']
+        use: ['css-loader']
       }
     ]
   },

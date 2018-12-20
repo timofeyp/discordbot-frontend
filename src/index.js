@@ -1,6 +1,6 @@
 import React    from 'react';
 import ReactDOM from 'react-dom';
-import App      from './components/App';
+
 import Navibar   from './components/Navbar';
 import './styles/index.css';
 
