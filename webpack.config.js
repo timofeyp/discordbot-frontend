@@ -2,7 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: './src/auth.js',
+  entry: './src/index.js',
   output: {
     path: path.join(__dirname, '/dist'),
     filename: 'index-bundle.js'
@@ -31,7 +31,8 @@ module.exports = {
     proxy: {
       '/api': {
         target: 'http://localhost:8090',
-        secure: false
+        secure: false,
+        changeOrigin: true
       }
     }
   }

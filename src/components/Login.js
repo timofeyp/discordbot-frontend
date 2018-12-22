@@ -27,10 +27,10 @@ class Login extends Component {
 
     const { username, password } = this.state;
 
-    axios.post('/api/auth/login', { username, password })
+    axios.post('/api/login', { username, password })
       .then((result) => {
         localStorage.setItem('jwtToken', result.data.token);
-        this.setState({ message: '' });
+        this.setState({ message: 'JWT TOKEN GOT' });
         this.props.history.push('/')
       })
       .catch((error) => {
@@ -50,12 +50,12 @@ class Login extends Component {
     return (
       <Navbar.Form pullRight>
       <FormGroup>
-        <FormControl type="text" placeholder="Имя" inputRef={(input) => {this.loginInput = input}}/>
+        <FormControl type="text" placeholder="Имя" inputRef={(input) => {this.loginInput = input}} name='username' onChange={ e => this.onChange(e) }/>
       </FormGroup>{' '}
       <FormGroup>
-        <FormControl type="text" placeholder="Пароль" inputRef={(input) => {this.passInput = input}}/>
+        <FormControl type="text" placeholder="Пароль" inputRef={(input) => {this.passInput = input}} name='password' onChange={ e => this.onChange(e) }/>
       </FormGroup>{' '}
-      <Button onClick={this.sendAuthData.bind(this)}>Логин</Button>
+      <Button onClick={ e => this.onSubmit(e) }>Логин</Button>
     </Navbar.Form>
     )
   }
