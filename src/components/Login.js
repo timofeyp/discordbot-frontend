@@ -56,7 +56,6 @@ class Login extends Component {
         <FormControl type="text" placeholder="Пароль" inputRef={(input) => {this.passInput = input}}/>
       </FormGroup>{' '}
       <Button onClick={this.sendAuthData.bind(this)}>Логин</Button>
-        <div>{this.props.testStore.a}</div>
     </Navbar.Form>
     )
   }
