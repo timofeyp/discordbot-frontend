@@ -3,7 +3,9 @@ import ReactDOM                                                    from 'react-d
 import axios                                                       from 'axios';
 import { Link }                                                    from 'react-router-dom';
 import '../styles/Login.css';
-import { Navbar, FieldGroup, FormControl, FormGroup, Button, Nav } from 'react-bootstrap'
+import { Navbar, FormControl, FormGroup, Button } from 'react-bootstrap'
+import { connect } from 'react-redux';
+
 class Login extends Component {
 
   constructor() {
@@ -38,20 +40,35 @@ class Login extends Component {
       });
   }
 
+  sendAuthData() {
+    this.props.onLogin(this.loginInput.value)
+    console.log(this.props.testStore)
+  }
+
   render() {
     const { username, password, message } = this.state;
     return (
       <Navbar.Form pullRight>
       <FormGroup>
-        <FormControl type="text" placeholder="Имя" />
+        <FormControl type="text" placeholder="Имя" inputRef={(input) => {this.loginInput = input}}/>
       </FormGroup>{' '}
       <FormGroup>
-        <FormControl type="text" placeholder="Пароль" />
+        <FormControl type="text" placeholder="Пароль" inputRef={(input) => {this.passInput = input}}/>
       </FormGroup>{' '}
-      <Button>Логин</Button>
+      <Button onClick={this.sendAuthData.bind(this)}>Логин</Button>
+        <div>{this.props.testStore.a}</div>
     </Navbar.Form>
     )
   }
 }
 
-export default Login;
+export default connect(
+  state => ({
+    testStore: state
+  }),
+  dispatch => ({
+    onLogin: (login) => {
+      dispatch({ type: 'LOGIN_TO_SYSTEM', payload: login });
+    }
+  })
+)(Login);

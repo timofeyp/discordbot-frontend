@@ -2,28 +2,33 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { Navbar, Nav, NavItem, FieldGroup, FormControl, FormGroup, Button } from 'react-bootstrap'
-import '../styles/Navbar.css';
-import Login  from './Login';
-
+import { Provider } from 'react-redux'
+import { Navbar, Nav, NavItem, Button } from 'react-bootstrap'
+import '../styles/Navbar.css'
+import Login from './Login'
+import { connect } from 'react-redux'
 
 class Navibar extends Component {
-  render() {
+  sendAuthData () {
+    console.log(this.props)
+  }
+
+  render () {
     return (
       <Navbar>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="#home">DISCORD BOT MENU</a>
+            <a href='#home'>DISCORD BOT MENU</a>
           </Navbar.Brand>
         </Navbar.Header>
-        <Nav pullRight={true} className='form'>
-             <NavItem eventKey={1} href="#">
+        <Nav pullRight className='form'>
+          <NavItem eventKey={1} href='#'>
               Link
-             </NavItem>
-             <NavItem eventKey={2} href="#">
+          </NavItem>
+          <NavItem eventKey={2} href='#'>
                 Link
-             </NavItem>
-        <Login/>
+          </NavItem>
+          <Login />
         </Nav>
 
       </Navbar>
@@ -31,4 +36,13 @@ class Navibar extends Component {
   }
 }
 
-export default Navibar
+export default connect(
+  state => ({
+    testStore: state
+  }),
+  dispatch => ({
+    // onAddTrack: (trackName) => {
+    //   dispatch({ type: 'ADD_TRACK', payload: trackName });
+    // }
+  })
+)(Navibar);
