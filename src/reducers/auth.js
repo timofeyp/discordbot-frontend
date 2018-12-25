@@ -1,4 +1,4 @@
-import { LOGIN_TO_SYSTEM , EXIT_FROM_SYSTEM } from '../actions'
+import { LOGIN_TO_SYSTEM, EXIT_FROM_SYSTEM } from '../actions'
 
 const auth = (state = [123], action) => {
   switch (action.type) {
