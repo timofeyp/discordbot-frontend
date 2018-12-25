@@ -27,8 +27,8 @@ class Login extends Component {
     e.preventDefault();
 
     const { username, password } = this.state;
-
-    axios.post('/api/login', { username, password })
+    console.log(this.state)
+    axios.post('/api/login',  username)
       .then((result) => {
         localStorage.setItem('jwtToken', result.data.token);
         this.setState({ message: '' });
@@ -51,10 +51,10 @@ class Login extends Component {
     return (
       <Navbar.Form pullRight>
       <FormGroup>
-        <FormControl type="text" placeholder="Имя" onChange={e => this.onChange(e)} />
+        <FormControl type="text" placeholder="Имя" onChange={e => this.onChange(e)} name='username'/>
       </FormGroup>{' '}
       <FormGroup>
-        <FormControl type="text" placeholder="Пароль" onChange={e => this.onChange(e)}/>
+        <FormControl type="text" placeholder="Пароль" onChange={e => this.onChange(e)} name='password'/>
       </FormGroup>{' '}
       <Button onClick={e => this.onSubmit(e)}>Логин</Button>
     </Navbar.Form>
