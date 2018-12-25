@@ -1,9 +1,14 @@
 import { LOGIN_TO_SYSTEM, EXIT_FROM_SYSTEM } from '../actions'
 
-const auth = (state = [123], action) => {
+const initialState = {
+  loggedIn : false,
+  login: ''
+}
+
+const auth = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_TO_SYSTEM:
-      return { ...state, a: action.payload }
+      return { ...state, login: action.payload, loggedIn: true }
       break
     case EXIT_FROM_SYSTEM:
       break

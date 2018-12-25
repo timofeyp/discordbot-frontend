@@ -1,10 +1,12 @@
-import React, { Component }                                        from 'react';
-import ReactDOM                                                    from 'react-dom';
-import axios                                                       from 'axios';
-import { Link }                                                    from 'react-router-dom';
-import '../styles/Login.css';
+import React, { Component }                                        from 'react'
+import ReactDOM                                                    from 'react-dom'
+import axios                                                       from 'axios'
+import { Link }                                                    from 'react-router-dom'
+import jwt_decode from 'jwt-decode'
+import '../styles/Login.css'
 import { Navbar, FormControl, FormGroup, Button } from 'react-bootstrap'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
+import { LOGIN_TO_SYSTEM } from '../actions'
 
 class Login extends Component {
 
@@ -12,63 +14,68 @@ class Login extends Component {
     super();
     this.state = {
       username: '',
-      password: '',
-      message: ''
-    };
+      password: ''
+    }
   }
   onChange = (e) => {
-    console.log(e)
     const state = this.state
-    state[e.target.name] = e.target.value;
+    state[e.target.name] = e.target.value
     this.setState(state);
+  }
+
+  componentDidMount() {
+    axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
   }
 
   onSubmit = (e) => {
     e.preventDefault();
 
-    const { username, password } = this.state;
-    console.log(this.state)
-    axios.post('/api/login',  username)
+    const { username, password } = this.state
+    axios.post('/api/login',  { username, password })
       .then((result) => {
-        localStorage.setItem('jwtToken', result.data.token);
-        this.setState({ message: '' });
+        localStorage.setItem('jwtToken', result.data.token)
+        axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
+        this.props.onLogin(jwt_decode(result.data.token).username)
+        console.log(jwt_decode(result.data.token).username)
+        // this.setState({ message: '' });
         this.props.history.push('/')
       })
       .catch((error) => {
         if(error.response.status === 401) {
-          this.setState({ message: 'Login failed. Username or password not match' });
+          this.setState({ message: 'Login failed. Username or password not match' })
         }
       });
   }
-
-  sendAuthData() {
-    this.props.onLogin(this.loginInput.value)
-    console.log(this.props.testStore)
-  }
-
-  render() {
+  
+    render() {
     const { username, password, message } = this.state;
-    return (
-      <Navbar.Form pullRight>
-      <FormGroup>
-        <FormControl type="text" placeholder="Имя" onChange={e => this.onChange(e)} name='username'/>
-      </FormGroup>{' '}
-      <FormGroup>
-        <FormControl type="text" placeholder="Пароль" onChange={e => this.onChange(e)} name='password'/>
-      </FormGroup>{' '}
-      <Button onClick={e => this.onSubmit(e)}>Логин</Button>
-    </Navbar.Form>
-    )
+      if (!this.props.authStore.loggedIn) {
+        return (
+          <Navbar.Form pullRight>
+            <FormGroup>
+              <FormControl type="text" placeholder="Имя" onChange={e => this.onChange(e)} name='username'/>
+            </FormGroup>{' '}
+            <FormGroup>
+              <FormControl type="text" placeholder="Пароль" onChange={e => this.onChange(e)} name='password'/>
+            </FormGroup>{' '}
+            <Button onClick={e => this.onSubmit(e)}>Логин</Button>
+          </Navbar.Form>
+        )
+      } else  {
+        return (
+          <div>Hello, <h1>{this.props.authStore.username}</h1></div>
+        )
+      }
   }
 }
 
 export default connect(
   state => ({
-    testStore: state
+    authStore: state
   }),
   dispatch => ({
     onLogin: (login) => {
-      dispatch({ type: 'LOGIN_TO_SYSTEM', payload: login });
+      dispatch({ type: LOGIN_TO_SYSTEM, payload: login })
     }
   })
 )(Login);
