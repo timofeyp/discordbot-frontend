@@ -9,13 +9,6 @@ import Login from './Login'
 import { connect } from 'react-redux'
 
 class ReportList extends Component {
-  event = (e) => {
-    console.log("123")
-  }
-
-  componentDidMount() {
-    window.addEventListener('storage', console.log('123142432'))
-  }
 
   render () {
     return (

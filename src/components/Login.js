@@ -1,12 +1,12 @@
-import React, { Component }                                        from 'react'
-import ReactDOM                                                    from 'react-dom'
-import axios                                                       from 'axios'
-import { Link }                                                    from 'react-router-dom'
-import jwt_decode from 'jwt-decode'
+import React, { Component }                                     from 'react'
+import ReactDOM                                                 from 'react-dom'
+import axios                                                    from 'axios'
+import { Link }                                                 from 'react-router-dom'
+import jwt_decode                                               from 'jwt-decode'
 import '../styles/Login.css'
-import { Navbar, FormControl, FormGroup, Button } from 'react-bootstrap'
-import { connect } from 'react-redux'
-import { LOGIN_TO_SYSTEM } from '../actions'
+import { Navbar, FormControl, FormGroup, Button, NavItem, Nav } from 'react-bootstrap'
+import { connect }                                              from 'react-redux'
+import { LOGIN_TO_SYSTEM }                                      from '../actions'
 
 class Login extends Component {
 
@@ -46,10 +46,10 @@ class Login extends Component {
         }
       });
   }
-  
+
     render() {
-    const { username, password, message } = this.state;
-      if (!this.props.authStore.loggedIn) {
+    console.log(this.props.authStore)
+      if (!this.props.authStore.auth.loggedIn) {
         return (
           <Navbar.Form pullRight>
             <FormGroup>
@@ -63,16 +63,18 @@ class Login extends Component {
         )
       } else  {
         return (
-          <div>Hello, <h1>{this.props.authStore.username}</h1></div>
+          <NavItem eventKey={3} href='#'>
+            Hello, {this.props.authStore.auth.login}
+          </NavItem>
         )
       }
   }
 }
 
 export default connect(
-  state => ({
-    authStore: state
-  }),
+  state => {
+    return {authStore: state}
+  },
   dispatch => ({
     onLogin: (login) => {
       dispatch({ type: LOGIN_TO_SYSTEM, payload: login })

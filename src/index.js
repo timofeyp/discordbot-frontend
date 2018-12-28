@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
@@ -10,6 +10,8 @@ import './styles/index.css'
 import combineReducers from './reducers'
 
 const store = createStore(combineReducers, composeWithDevTools(applyMiddleware(thunk)))
+export default store
+
 
 ReactDOM.render(
   <Provider store={store}>
@@ -18,3 +20,4 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 )
+
