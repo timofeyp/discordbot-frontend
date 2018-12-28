@@ -4,7 +4,7 @@ import axios                                                    from 'axios'
 import { Link }                                                 from 'react-router-dom'
 import jwt_decode                                               from 'jwt-decode'
 import '../styles/Login.css'
-import { Navbar, FormControl, FormGroup, Button, NavItem, Nav } from 'react-bootstrap'
+import { Navbar, FormControl, FormGroup, Button, NavItem, Glyphicon } from 'react-bootstrap'
 import { connect }                                              from 'react-redux'
 import { LOGIN_TO_SYSTEM }                                      from '../actions'
 
@@ -24,7 +24,8 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
+    axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
+    this.props.onLogin(jwt_decode(localStorage.getItem('jwtToken')).username)
   }
 
   onSubmit = (e) => {
@@ -65,6 +66,10 @@ class Login extends Component {
         return (
           <NavItem eventKey={3} href='#'>
             Hello, {this.props.authStore.auth.login}
+            {' '}
+          <Button bsSize="xsmall">
+            <Glyphicon glyph="log-out" /> Выход
+          </Button>
           </NavItem>
         )
       }

@@ -37,7 +37,6 @@ class Navibar extends Component {
           </NavItem>
           <Login />
         </Nav>
-
       </Navbar>
     )
   }
