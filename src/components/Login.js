@@ -6,7 +6,7 @@ import jwt_decode                                               from 'jwt-decode
 import '../styles/Login.css'
 import { Navbar, FormControl, FormGroup, Button, NavItem, Glyphicon } from 'react-bootstrap'
 import { connect }                                              from 'react-redux'
-import { LOGIN_TO_SYSTEM }                                      from '../actions'
+import { LOGIN_TO_SYSTEM, EXIT_FROM_SYSTEM }                                      from '../actions'
 
 class Login extends Component {
 
@@ -24,20 +24,20 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
-    this.props.onLogin(jwt_decode(localStorage.getItem('jwtToken')).username)
+    if (localStorage.getItem('jwtToken')) {
+      axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
+      this.props.onLogin(jwt_decode(localStorage.getItem('jwtToken')).username)
+    }
   }
 
   onSubmit = (e) => {
     e.preventDefault();
-
     const { username, password } = this.state
     axios.post('/api/login',  { username, password })
       .then((result) => {
         localStorage.setItem('jwtToken', result.data.token)
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
         this.props.onLogin(jwt_decode(result.data.token).username)
-        console.log(jwt_decode(result.data.token).username)
         // this.setState({ message: '' });
         this.props.history.push('/')
       })
@@ -48,8 +48,13 @@ class Login extends Component {
       });
   }
 
+  onUnlogin = (e) => {
+    e.preventDefault();
+    this.props.onExit()
+    localStorage.removeItem('jwtToken')
+  }
+
     render() {
-    console.log(this.props.authStore)
       if (!this.props.authStore.auth.loggedIn) {
         return (
           <Navbar.Form pullRight>
@@ -67,7 +72,7 @@ class Login extends Component {
           <NavItem eventKey={3} href='#'>
             Hello, {this.props.authStore.auth.login}
             {' '}
-          <Button bsSize="xsmall">
+          <Button bsSize="xsmall" onClick={e => this.onUnlogin(e)}>
             <Glyphicon glyph="log-out" /> Выход
           </Button>
           </NavItem>
@@ -83,6 +88,9 @@ export default connect(
   dispatch => ({
     onLogin: (login) => {
       dispatch({ type: LOGIN_TO_SYSTEM, payload: login })
+    },
+    onExit: () => {
+      dispatch({ type: EXIT_FROM_SYSTEM })
     }
   })
 )(Login);

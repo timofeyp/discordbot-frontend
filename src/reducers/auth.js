@@ -11,6 +11,8 @@ const auth = (state = initialState, action) => {
       return { ...state, login: action.payload, loggedIn: true }
       break
     case EXIT_FROM_SYSTEM:
+      console.log(state)
+      return initialState
       break
     default:
       break
