@@ -1,10 +1,12 @@
-import React, { Component }                                        from 'react';
-import ReactDOM                                                    from 'react-dom';
-import axios                                                       from 'axios';
-import { Link }                                                    from 'react-router-dom';
-import '../styles/Login.css';
-import { Navbar, FormControl, FormGroup, Button } from 'react-bootstrap'
-import { connect } from 'react-redux';
+import React, { Component }                                     from 'react'
+import ReactDOM                                                 from 'react-dom'
+import axios                                                    from 'axios'
+import { Link }                                                 from 'react-router-dom'
+import jwt_decode                                               from 'jwt-decode'
+import '../styles/Login.css'
+import { Navbar, FormControl, FormGroup, Button, NavItem, Glyphicon } from 'react-bootstrap'
+import { connect }                                              from 'react-redux'
+import { LOGIN_TO_SYSTEM, EXIT_FROM_SYSTEM }                                      from '../actions'
 
 class Login extends Component {
 
@@ -12,62 +14,83 @@ class Login extends Component {
     super();
     this.state = {
       username: '',
-      password: '',
-      message: ''
-    };
+      password: ''
+    }
   }
   onChange = (e) => {
     const state = this.state
-    state[e.target.name] = e.target.value;
+    state[e.target.name] = e.target.value
     this.setState(state);
+  }
+
+  componentDidMount() {
+    if (localStorage.getItem('jwtToken')) {
+      axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
+      this.props.onLogin(jwt_decode(localStorage.getItem('jwtToken')).username)
+    }
   }
 
   onSubmit = (e) => {
     e.preventDefault();
-
-    const { username, password } = this.state;
-
-    axios.post('/api/login', { username, password })
+    const { username, password } = this.state
+    axios.post('/api/login',  { username, password })
       .then((result) => {
-        localStorage.setItem('jwtToken', result.data.token);
-        this.setState({ message: 'JWT TOKEN GOT' });
+        localStorage.setItem('jwtToken', result.data.token)
+        axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
+        this.props.onLogin(jwt_decode(result.data.token).username)
+        // this.setState({ message: '' });
         this.props.history.push('/')
       })
       .catch((error) => {
         if(error.response.status === 401) {
-          this.setState({ message: 'Login failed. Username or password not match' });
+          this.setState({ message: 'Login failed. Username or password not match' })
         }
       });
   }
 
-  sendAuthData() {
-    this.props.onLogin(this.loginInput.value)
-    console.log(this.props.testStore)
+  onUnlogin = (e) => {
+    e.preventDefault();
+    this.props.onExit()
+    localStorage.removeItem('jwtToken')
   }
 
-  render() {
-    const { username, password, message } = this.state;
-    return (
-      <Navbar.Form pullRight>
-      <FormGroup>
-        <FormControl type="text" placeholder="Имя" inputRef={(input) => {this.loginInput = input}} name='username' onChange={ e => this.onChange(e) }/>
-      </FormGroup>{' '}
-      <FormGroup>
-        <FormControl type="text" placeholder="Пароль" inputRef={(input) => {this.passInput = input}} name='password' onChange={ e => this.onChange(e) }/>
-      </FormGroup>{' '}
-      <Button onClick={ e => this.onSubmit(e) }>Логин</Button>
-    </Navbar.Form>
-    )
+    render() {
+      if (!this.props.authStore.auth.loggedIn) {
+        return (
+          <Navbar.Form pullRight>
+            <FormGroup>
+              <FormControl type="text" placeholder="Имя" onChange={e => this.onChange(e)} name='username'/>
+            </FormGroup>{' '}
+            <FormGroup>
+              <FormControl type="text" placeholder="Пароль" onChange={e => this.onChange(e)} name='password'/>
+            </FormGroup>{' '}
+            <Button onClick={e => this.onSubmit(e)}>Логин</Button>
+          </Navbar.Form>
+        )
+      } else  {
+        return (
+          <NavItem eventKey={3} href='#'>
+            Hello, {this.props.authStore.auth.login}
+            {' '}
+          <Button bsSize="xsmall" onClick={e => this.onUnlogin(e)}>
+            <Glyphicon glyph="log-out" /> Выход
+          </Button>
+          </NavItem>
+        )
+      }
   }
 }
 
 export default connect(
-  state => ({
-    testStore: state
-  }),
+  state => {
+    return {authStore: state}
+  },
   dispatch => ({
     onLogin: (login) => {
-      dispatch({ type: 'LOGIN_TO_SYSTEM', payload: login });
+      dispatch({ type: LOGIN_TO_SYSTEM, payload: login })
+    },
+    onExit: () => {
+      dispatch({ type: EXIT_FROM_SYSTEM })
     }
   })
 )(Login);

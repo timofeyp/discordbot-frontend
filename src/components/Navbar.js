@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
@@ -9,8 +9,15 @@ import Login from './Login'
 import { connect } from 'react-redux'
 
 class Navibar extends Component {
-  sendAuthData () {
-    console.log(this.props)
+
+  constructor(props) {
+    super(props);
+  }
+
+  getChildContext() {
+    return {
+      store: this.props.store
+    }
   }
 
   render () {
@@ -30,16 +37,18 @@ class Navibar extends Component {
           </NavItem>
           <Login />
         </Nav>
-
       </Navbar>
     )
   }
 }
 
+
 export default connect(
-  state => ({
-    testStore: state
-  }),
+  state =>
+    {
+    return {testStore: state}
+
+  },
   dispatch => ({
     // onAddTrack: (trackName) => {
     //   dispatch({ type: 'ADD_TRACK', payload: trackName });
