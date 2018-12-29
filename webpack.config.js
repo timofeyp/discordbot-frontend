@@ -29,7 +29,7 @@ module.exports = {
     contentBase: path.join(__dirname, "dist"),
     compress: true,
     proxy: {
-      '/api': {
+      '/api/*': {
         target: 'http://localhost:8090',
         secure: false,
         changeOrigin: true

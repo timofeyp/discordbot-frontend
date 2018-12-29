@@ -1,7 +1,7 @@
 import { LOGIN_TO_SYSTEM, EXIT_FROM_SYSTEM } from '../actions'
 
 const initialState = {
-  loggedIn : false,
+  loggedIn: false,
   login: ''
 }
 
@@ -11,8 +11,8 @@ const auth = (state = initialState, action) => {
       return { ...state, login: action.payload, loggedIn: true }
       break
     case EXIT_FROM_SYSTEM:
-      console.log(state)
-      return initialState
+      const emptyAuth = { ...state, loggedIn: false, login: '' }
+      return emptyAuth
       break
     default:
       break

@@ -49,6 +49,8 @@ class Login extends Component {
   }
 
   onUnlogin = (e) => {
+    const emptyState = { ...this.state, username: '', password: '' }
+    this.setState(emptyState)
     e.preventDefault();
     this.props.onExit()
     localStorage.removeItem('jwtToken')
@@ -58,13 +60,13 @@ class Login extends Component {
       if (!this.props.authStore.auth.loggedIn) {
         return (
           <Navbar.Form pullRight>
-            <FormGroup>
-              <FormControl type="text" placeholder="Имя" onChange={e => this.onChange(e)} name='username'/>
+            <FormGroup bsSize='xsmall'>
+              <FormControl bsSize='xsmall' type='text' placeholder='Имя' onChange={e => this.onChange(e)} name='username'/>
             </FormGroup>{' '}
-            <FormGroup>
-              <FormControl type="text" placeholder="Пароль" onChange={e => this.onChange(e)} name='password'/>
+            <FormGroup bsSize='xsmall'>
+              <FormControl type='text' placeholder='Пароль' onChange={e => this.onChange(e)} name='password'/>
             </FormGroup>{' '}
-            <Button onClick={e => this.onSubmit(e)}>Логин</Button>
+            <Button bsSize='xsmall' onClick={e => this.onSubmit(e)}>Логин</Button>
           </Navbar.Form>
         )
       } else  {
@@ -72,7 +74,7 @@ class Login extends Component {
           <NavItem eventKey={3} href='#'>
             Hello, {this.props.authStore.auth.login}
             {' '}
-          <Button bsSize="xsmall" onClick={e => this.onUnlogin(e)}>
+          <Button bsSize='xsmall' onClick={e => this.onUnlogin(e)}>
             <Glyphicon glyph="log-out" /> Выход
           </Button>
           </NavItem>
