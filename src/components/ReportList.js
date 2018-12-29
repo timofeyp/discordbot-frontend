@@ -7,8 +7,13 @@ import { ListGroup, ListGroupItem } from 'react-bootstrap'
 import '../styles/ReportList.css'
 import Login from './Login'
 import { connect } from 'react-redux'
+import { getReports } from '../actions/reports'
 
 class ReportList extends Component {
+  componentDidUpdate(prevProps) {
+    this.props.onGetReports
+  }
+
 
   render () {
     return (
@@ -23,11 +28,14 @@ class ReportList extends Component {
 
 export default connect(
   state => ({
-    testStore: state
+    auth: state.auth.loggedIn
   }),
   dispatch => ({
     // onAddTrack: (trackName) => {
-    //   dispatch({ type: 'ADD_TRACK', payload: trackName });
+    //   dispatch({ type: 'ADD_TRACK', payload: trackName })
     // }
+    onGetReports: () => {
+      //dispatch(getReports())
+    }
   })
-)(ReportList);
+)(ReportList)

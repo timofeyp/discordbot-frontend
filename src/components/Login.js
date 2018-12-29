@@ -23,12 +23,13 @@ class Login extends Component {
     this.setState(state);
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     if (localStorage.getItem('jwtToken')) {
       axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
       this.props.onLogin(jwt_decode(localStorage.getItem('jwtToken')).username)
     }
   }
+
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -36,9 +37,8 @@ class Login extends Component {
     axios.post('/api/login',  { username, password })
       .then((result) => {
         localStorage.setItem('jwtToken', result.data.token)
-        axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
+        axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
         this.props.onLogin(jwt_decode(result.data.token).username)
-        // this.setState({ message: '' });
         this.props.history.push('/')
       })
       .catch((error) => {
@@ -60,19 +60,19 @@ class Login extends Component {
       if (!this.props.authStore.auth.loggedIn) {
         return (
           <Navbar.Form pullRight>
-            <FormGroup bsSize='xsmall'>
-              <FormControl bsSize='xsmall' type='text' placeholder='Имя' onChange={e => this.onChange(e)} name='username'/>
+            <FormGroup bsSize='small'>
+              <FormControl  type='text' placeholder='Имя' onChange={e => this.onChange(e)} name='username'/>
             </FormGroup>{' '}
-            <FormGroup bsSize='xsmall'>
+            <FormGroup bsSize='small'>
               <FormControl type='text' placeholder='Пароль' onChange={e => this.onChange(e)} name='password'/>
             </FormGroup>{' '}
-            <Button bsSize='xsmall' onClick={e => this.onSubmit(e)}>Логин</Button>
+            <Button bsSize='xsmall' onClick={e => this.onSubmit(e)}>Вход</Button>
           </Navbar.Form>
         )
       } else  {
         return (
           <NavItem eventKey={3} href='#'>
-            Hello, {this.props.authStore.auth.login}
+            {this.props.authStore.auth.login}
             {' '}
           <Button bsSize='xsmall' onClick={e => this.onUnlogin(e)}>
             <Glyphicon glyph="log-out" /> Выход
