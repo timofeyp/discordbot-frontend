@@ -7,15 +7,19 @@ import { ListGroup, ListGroupItem } from 'react-bootstrap'
 import '../styles/ReportList.css'
 import Login from './Login'
 import { connect } from 'react-redux'
-import { getReports } from '../actions/reports'
+import { getReports } from '../actions/'
 
 class ReportList extends Component {
-  componentDidUpdate(prevProps) {
-    this.props.onGetReports
+  shouldComponentUpdate (nextProps, nextState, nextContext) {
+    console.log(nextProps.auth)
+    console.log(this.props.auth)
+    if (nextProps.auth && !this.props.auth) {
+      this.props.onGetReports()
+    }
   }
 
-
   render () {
+    console.log(this.props.reports)
     return (
       <ListGroup>
         <ListGroupItem>Item 1</ListGroupItem>
@@ -28,14 +32,12 @@ class ReportList extends Component {
 
 export default connect(
   state => ({
-    auth: state.auth.loggedIn
+    auth: state.auth.loggedIn,
+    reports: state.reports
   }),
-  dispatch => ({
-    // onAddTrack: (trackName) => {
-    //   dispatch({ type: 'ADD_TRACK', payload: trackName })
-    // }
-    onGetReports: () => {
-      //dispatch(getReports())
+  dispatch => {
+    return {
+      onGetReports: () => dispatch(getReports())
     }
-  })
+  }
 )(ReportList)

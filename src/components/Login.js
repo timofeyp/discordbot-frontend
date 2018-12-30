@@ -6,7 +6,8 @@ import jwt_decode                                               from 'jwt-decode
 import '../styles/Login.css'
 import { Navbar, FormControl, FormGroup, Button, NavItem, Glyphicon } from 'react-bootstrap'
 import { connect }                                              from 'react-redux'
-import { LOGIN_TO_SYSTEM, EXIT_FROM_SYSTEM }                                      from '../actions'
+import { LOGIN_TO_SYSTEM, EXIT_FROM_SYSTEM, getReports } from '../actions'
+import { loginToSystem } from '../actions/auth'
 
 class Login extends Component {
 
@@ -23,29 +24,31 @@ class Login extends Component {
     this.setState(state);
   }
 
-  componentDidUpdate() {
-    if (localStorage.getItem('jwtToken')) {
-      axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
-      this.props.onLogin(jwt_decode(localStorage.getItem('jwtToken')).username)
-    }
-  }
+  // componentDidMount() {
+  //   if (localStorage.getItem('jwtToken')) {
+  //     axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
+  //     console.log(jwt_decode(localStorage.getItem('jwtToken')).username)
+  //     //this.props.onLogin(jwt_decode(localStorage.getItem('jwtToken')).username)
+  //   }
+  // }
 
 
   onSubmit = (e) => {
-    e.preventDefault();
-    const { username, password } = this.state
-    axios.post('/api/login',  { username, password })
-      .then((result) => {
-        localStorage.setItem('jwtToken', result.data.token)
-        axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
-        this.props.onLogin(jwt_decode(result.data.token).username)
-        this.props.history.push('/')
-      })
-      .catch((error) => {
-        if(error.response.status === 401) {
-          this.setState({ message: 'Login failed. Username or password not match' })
-        }
-      });
+    console.log(loginToSystem)
+    // e.preventDefault();
+    // const { username, password } = this.state
+    // axios.post('/api/login',  { username, password })
+    //   .then((result) => {
+    //     localStorage.setItem('jwtToken', result.data.token)
+    //     axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
+    //     this.props.onLogin(jwt_decode(result.data.token).username)
+    //     this.props.history.push('/')
+    //   })
+    //   .catch((error) => {
+    //     if(error.response.status === 401) {
+    //       this.setState({ message: 'Login failed. Username or password not match' })
+    //     }
+    //   });
   }
 
   onUnlogin = (e) => {
@@ -66,7 +69,7 @@ class Login extends Component {
             <FormGroup bsSize='small'>
               <FormControl type='text' placeholder='Пароль' onChange={e => this.onChange(e)} name='password'/>
             </FormGroup>{' '}
-            <Button bsSize='xsmall' onClick={e => this.onSubmit(e)}>Вход</Button>
+            <Button bsSize='xsmall' onClick={e => this.props.onLogin(e, this.state)}>Вход</Button>
           </Navbar.Form>
         )
       } else  {
@@ -88,11 +91,12 @@ export default connect(
     return {authStore: state}
   },
   dispatch => ({
-    onLogin: (login) => {
-      dispatch({ type: LOGIN_TO_SYSTEM, payload: login })
-    },
+    // onLogin: (login) => {
+    //   dispatch({ type: LOGIN_TO_SYSTEM, payload: login })
+    // },
     onExit: () => {
       dispatch({ type: EXIT_FROM_SYSTEM })
-    }
+    },
+    onLogin: (e, authData) => dispatch(loginToSystem(e, authData))
   })
 )(Login);

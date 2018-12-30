@@ -9,6 +9,7 @@ import Navibar from './components/Navbar'
 import './styles/index.css'
 import combineReducers from './reducers'
 
+
 const store = createStore(combineReducers, composeWithDevTools(applyMiddleware(thunk)))
 export default store
 
