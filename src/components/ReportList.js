@@ -10,21 +10,21 @@ import { connect } from 'react-redux'
 import { getReports } from '../actions/'
 
 class ReportList extends Component {
-  shouldComponentUpdate (nextProps, nextState, nextContext) {
-    console.log(nextProps.auth)
+  componentDidMount () {
     console.log(this.props.auth)
-    if (nextProps.auth && !this.props.auth) {
-      this.props.onGetReports()
-    }
   }
+
+  // shouldComponentUpdate (nextProps, nextState, nextContext) {
+  //   if (nextProps.auth && !this.props.auth) {
+  //    console.log(nextState)
+  //   }
+  // }
 
   render () {
     console.log(this.props.reports)
     return (
       <ListGroup>
-        <ListGroupItem>Item 1</ListGroupItem>
-        <ListGroupItem>Item 2</ListGroupItem>
-        <ListGroupItem>...</ListGroupItem>
+        {this.props.reports.map(report => <ListGroupItem key={report._id}>report.author</ListGroupItem>)}
       </ListGroup>
     )
   }
@@ -35,9 +35,7 @@ export default connect(
     auth: state.auth.loggedIn,
     reports: state.reports
   }),
-  dispatch => {
-    return {
-      onGetReports: () => dispatch(getReports())
-    }
-  }
+  dispatch => ({
+    onGetReports: () => dispatch(getReports())
+  })
 )(ReportList)

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
+import { getReports } from './'
 
 export const LOGIN_TO_SYSTEM = 'LOGIN_TO_SYSTEM'
 export const EXIT_FROM_SYSTEM = 'EXIT_FROM_SYSTEM'
@@ -8,10 +9,8 @@ export const LOGIN_TO_SYSTEM_SUCCESS = 'LOGIN_TO_SYSTEM_SUCCESS'
 export function loginToSystem (e, auth) {
   e.preventDefault()
   return dispatch => {
-    // экшен с типом REQUEST (запрос начался)
-    // диспатчится сразу, как будто-бы перед реальным запросом
     dispatch({
-      type: LOGIN_TO_SYSTEM
+      type: LOGIN_TO_SYSTEM // ДИСПАТЧИМ СОСТОЯНИЕ НАЧАЛА ПРОЦЕССА ЛОГИНА
     })
     axios.post('/api/login', auth)
       .then((result) => {
@@ -19,13 +18,9 @@ export function loginToSystem (e, auth) {
         axios.defaults.headers.common['Authorization'] = result.data.token
         dispatch({
           type: LOGIN_TO_SYSTEM_SUCCESS,
-          payload: jwt_decode(result.data.token).username
+          payload: jwt_decode(result.data.token).username // ДИСПАТЧИМ ЛОГИН
         })
-        //this.props.history.push('/')
+        getReports(dispatch) // ВЫЗЫВАЕМ ФУНКЦИЮ С ЗАГРУЗКОЙ ДАННЫХ?
       })
-    // а экшен внутри setTimeout
-    // диспатчится через секунду
-    // как будто-бы в это время
-    // наши данные загружались из сети
   }
 }

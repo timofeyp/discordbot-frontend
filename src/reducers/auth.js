@@ -1,4 +1,4 @@
-import { LOGIN_TO_SYSTEM, LOGIN_TO_SYSTEM_SUCCESS ,EXIT_FROM_SYSTEM } from '../actions/auth'
+import { LOGIN_TO_SYSTEM, LOGIN_TO_SYSTEM_SUCCESS, EXIT_FROM_SYSTEM } from '../actions/auth'
 
 const initialState = {
   isLogging: false,
@@ -18,7 +18,7 @@ const auth = (state = initialState, action) => {
       return { ...state, loggedIn: false, login: '' }
       break
     default:
-      break
+     break
   }
   return state
 }

@@ -77,7 +77,7 @@ class Login extends Component {
           <NavItem eventKey={3} href='#'>
             {this.props.authStore.auth.login}
             {' '}
-          <Button bsSize='xsmall' onClick={e => this.onUnlogin(e)}>
+          <Button bsSize='xsmall' onClick={event => this.onUnlogin(event)}>
             <Glyphicon glyph="log-out" /> Выход
           </Button>
           </NavItem>
@@ -97,6 +97,6 @@ export default connect(
     onExit: () => {
       dispatch({ type: EXIT_FROM_SYSTEM })
     },
-    onLogin: (e, authData) => dispatch(loginToSystem(e, authData))
+    onLogin: (event, authData) => dispatch(loginToSystem(event, authData))
   })
 )(Login);
