@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { ListGroup, ListGroupItem } from 'react-bootstrap'
+import { ListGroup, ListGroupItem, Alert } from 'react-bootstrap'
 import '../styles/ReportList.css'
 import Login from './Login'
 import { connect } from 'react-redux'
-import { getReports } from '../actions/'
+import { getReports } from '../actions/reports'
+import Report  from './Report'
 
 class ReportList extends Component {
   componentDidMount () {
@@ -21,12 +22,21 @@ class ReportList extends Component {
   // }
 
   render () {
-    console.log(this.props.reports)
-    return (
-      <ListGroup>
-        {this.props.reports.map(report => <ListGroupItem key={report._id}>report.author</ListGroupItem>)}
-      </ListGroup>
-    )
+    if (this.props.auth) {
+      return (
+        <div className={'listGroup'}>
+          <ListGroup >
+            {this.props.reports.map(report => <Report className={ListGroup} key={report._id} report={report} />)}
+          </ListGroup>
+        </div>
+      )
+    } else {
+      return (
+        <Alert bsStyle='danger'>
+          <strong>Необходимо выполнить вход для доступа к данным!</strong>
+        </Alert>
+      )
+    }
   }
 }
 
