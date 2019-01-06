@@ -1,6 +1,8 @@
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
-import { getReports } from './'
+import { getReports } from './reports'
+import { getDiscordUsers } from './discordUsers'
+
 
 export const LOGIN_TO_SYSTEM = 'LOGIN_TO_SYSTEM'
 export const EXIT_FROM_SYSTEM = 'EXIT_FROM_SYSTEM'
@@ -20,7 +22,8 @@ export function loginToSystem (e, auth) {
           type: LOGIN_TO_SYSTEM_SUCCESS,
           payload: jwt_decode(result.data.token).username // ДИСПАТЧИМ ЛОГИН
         })
-        getReports(dispatch) // ВЫЗЫВАЕМ ФУНКЦИЮ С ЗАГРУЗКОЙ ДАННЫХ?
+        getReports(dispatch)
+        getDiscordUsers(dispatch)
       })
   }
 }

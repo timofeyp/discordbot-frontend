@@ -19,7 +19,7 @@ class Navibar extends Component {
   render () {
     if (this.props.auth) {
       return (
-        <Navbar>
+        <Navbar className={'form'}>
           <Navbar.Header>
             <Navbar.Brand>
               <a href='#home'>DISCORD BOT MENU</a>
@@ -38,7 +38,7 @@ class Navibar extends Component {
       )
     } else {
       return (
-        <Navbar>
+        <Navbar className={'form'}>
           <Navbar.Header>
             <Navbar.Brand>
               <a href='#home'>DISCORD BOT MENU</a>

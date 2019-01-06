@@ -6,7 +6,7 @@ import jwt_decode                                               from 'jwt-decode
 import '../styles/Login.css'
 import { Navbar, FormControl, FormGroup, Button, NavItem, Glyphicon } from 'react-bootstrap'
 import { connect }                                              from 'react-redux'
-import { LOGIN_TO_SYSTEM, EXIT_FROM_SYSTEM, getReports } from '../actions'
+import { LOGIN_TO_SYSTEM, EXIT_FROM_SYSTEM, getReports } from '../actions/auth'
 import { loginToSystem } from '../actions/auth'
 
 class Login extends Component {
