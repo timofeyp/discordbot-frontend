@@ -14,11 +14,11 @@ class Report extends Component {
   render () {
     return (
       <Jumbotron bsClass='jumbo' >
-        <b>{this.props.report.author}</b>
+        <b>{this.props.report.author.name}</b>
         <br/>
         <b>{this.props.report.created}</b>
         <br/>
-        {this.props.report.reports.map(report => <p> <b>{report.reportNum}. </b> {report.text}</p>)}
+        {this.props.report.reports.map(report => <p key={report._id}> <b>{report.reportNum}. </b> {report.text}</p>)}
         <br/>
         <br/>
       </Jumbotron >

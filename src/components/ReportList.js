@@ -8,31 +8,45 @@ import '../styles/ReportList.css'
 import Login from './Login'
 import { connect } from 'react-redux'
 import { getReports } from '../actions/reports'
-import Report  from './Report'
+import Report from './Report'
+import Slider from 'react-animated-slider'
+import 'react-animated-slider/build/horizontal.css'
+
 
 class ReportList extends Component {
-  componentDidMount () {
-    console.log(this.props.auth)
+  constructor (props) {
+    super(props)
+
+    this.state = { skip: 0 }
   }
 
-  // shouldComponentUpdate (nextProps, nextState, nextContext) {
-  //   if (nextProps.auth && !this.props.auth) {
-  //    console.log(nextState)
-  //   }
-  // }
+  componentWillMount () {
+    window.onscroll = () => {
+      console.log(this.state)
+      const scrolled = window.pageYOffset || document.documentElement.scrollTop
+      console.log(scrolled)
+      if (scrolled > 500) {
+        let i = this.state.skip
+        this.setState({ ...this.state.skip, skip: ++i })
+        console.log(this.state)
+        this.props.onGetReports({ limit: 2, skip: this.state.skip })
+        window.scrollTo(0, 0)
+      }
+    }
+  }
 
   render () {
     if (this.props.auth) {
       return (
         <div className={'listGroup'}>
-          <ListGroup >
+          <Slider >
             {this.props.reports.map(report => <Report className={ListGroup} key={report._id} report={report} />)}
-          </ListGroup>
+          </Slider>
         </div>
       )
     } else {
       return (
-        <Alert bsStyle='danger'>
+        <Alert bsStyle='danger' ref={'list'}>
           <strong>Необходимо выполнить вход для доступа к данным!</strong>
         </Alert>
       )
@@ -46,6 +60,6 @@ export default connect(
     reports: state.reports
   }),
   dispatch => ({
-    onGetReports: () => dispatch(getReports())
+    onGetReports: (conditions) => getReports(dispatch, conditions)
   })
 )(ReportList)

@@ -14,6 +14,8 @@ class SelectMenu extends React.Component {
     options: []
   }
 
+
+
   componentWillReceiveProps(nextProps) {
     if(nextProps.discordUsers !== this.props.discordUsers) {
       const newOptions = nextProps.discordUsers.map(user => ({value: user.name, label: user.name}))
@@ -22,7 +24,7 @@ class SelectMenu extends React.Component {
   }
 
   handleChange = async (selectedOption) => {
-    await this.props.onGetReports()
+    await this.props.onGetReports({ sort: { created: -1 } })
     this.setState({ selectedOption })
     let filterArr = selectedOption.map(option => option.value)
     this.props.onFilter(filterArr)
@@ -39,7 +41,6 @@ class SelectMenu extends React.Component {
           options={this.state.options}
           isMulti={true}
         />
-        <Calendar />
       </div>
     );
   }
@@ -50,7 +51,7 @@ export default connect(
     discordUsers: state.discordUsers
   }),
   dispatch => ({
-    onGetReports: () => getReports(dispatch),
+    onGetReports: (conditions) => getReports(dispatch, conditions),
     onGetDiscordUsers: () => dispatch(getDiscordUsers()),
     onFilter: (filterArr) => {
       dispatch({ type: FILTER_REPORTS_BY_NAME, payload: filterArr })
