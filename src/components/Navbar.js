@@ -41,7 +41,7 @@ class Navibar extends Component {
             >
               <Row className="clearfix">
                 <Col sm={12}>
-                  <Nav bsStyle="tabs">
+                  <Nav className={"delete-border"} bsStyle="tabs">
                     <NavItem eventKey="first">Даты</NavItem>
                     <NavItem eventKey="second">Пользователи</NavItem>
                     <NavDropdown onClick={() => this.setState({key : null})} eventKey="3" title="Навигация" >

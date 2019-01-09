@@ -39,7 +39,7 @@ class ReportList extends Component {
       return (
         <div className={'listGroup'}>
           <Carousel {...this.state.settings}>
-            {this.props.reports.map(report => <div><Report className={ListGroup} key={report._id} report={report} /></div>)}
+            {this.props.reports.map(report => <Report className={ListGroup} key={report._id} report={report} />)}
           </Carousel>
         </div>
       )

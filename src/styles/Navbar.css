@@ -3,3 +3,8 @@
     display: inline-block;
     line-height: 20px;
 }
+
+
+.delete-border {
+    border-bottom: none;
+}

@@ -6,6 +6,9 @@ import connect from 'react-redux/es/connect/connect'
 import { getDiscordUsers } from '../actions/discordUsers'
 import { getReports } from '../actions/reports'
 import { FILTER_REPORTS_BY_NAME } from '../actions/reports'
+import '../styles/Select.css'
+
+
 
 
 class SelectMenu extends React.Component {
@@ -36,6 +39,7 @@ class SelectMenu extends React.Component {
     return (
       <div>
         <Select
+
           value={selectedOption}
           onChange={this.handleChange}
           options={this.state.options}

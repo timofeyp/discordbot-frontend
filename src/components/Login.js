@@ -15,7 +15,8 @@ class Login extends Component {
     super();
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      hasAuthorized: false
     }
   }
   onChange = (e) => {
@@ -24,13 +25,12 @@ class Login extends Component {
     this.setState(state);
   }
 
-  // componentDidMount() {
-  //   if (localStorage.getItem('jwtToken')) {
-  //     axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
-  //     console.log(jwt_decode(localStorage.getItem('jwtToken')).username)
-  //     //this.props.onLogin(jwt_decode(localStorage.getItem('jwtToken')).username)
-  //   }
-  // }
+  componentDidMount() {
+    if (localStorage.getItem('jwtToken')) {
+      axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
+      this.props.onLogin(null,{jwt: localStorage.getItem('jwtToken')})
+    }
+  }
 
 
   onSubmit = (e) => {
