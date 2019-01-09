@@ -7,8 +7,7 @@ import thunk from 'redux-thunk'
 import ReportList from './components/ReportList'
 import Navibar from './components/Navbar'
 import SelectMenu from './components/SelectMenu'
-import NextButton from './Components/NextButton'
-import PreviousButton from './Components/PreviousButton'
+
 import './styles/index.css'
 import combineReducers from './reducers'
 import { Grid, Row, Col } from 'react-bootstrap'
@@ -26,18 +25,8 @@ ReactDOM.render(
     <br/>
     <br/>
     <div className={'root'} >
-      <div className={'prev-button'}>
-        <div className={'prev-button-position'}>
-          <PreviousButton />
-        </div>
-      </div>
       <div className={'report-list'}>
         <ReportList />
-      </div>
-      <div className={'next-button'}>
-        <div className={'next-button-position'}>
-          <NextButton />
-        </div>
       </div>
     </div>
   </Provider>,

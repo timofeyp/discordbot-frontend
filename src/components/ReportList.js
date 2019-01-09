@@ -9,39 +9,38 @@ import Login from './Login'
 import { connect } from 'react-redux'
 import { getReports } from '../actions/reports'
 import Report from './Report'
-import Slider from 'react-animated-slider'
+import Carousel from 'react-slick'
 import 'react-animated-slider/build/horizontal.css'
-
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 class ReportList extends Component {
   constructor (props) {
     super(props)
 
-    this.state = { skip: 0 }
+    this.state = { skip: 0,
+      slideIndex: 0,
+      settings: {
+        dots: false,
+        fade: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }
   }
 
   componentWillMount () {
-    window.onscroll = () => {
-      console.log(this.state)
-      const scrolled = window.pageYOffset || document.documentElement.scrollTop
-      console.log(scrolled)
-      if (scrolled > 500) {
-        let i = this.state.skip
-        this.setState({ ...this.state.skip, skip: ++i })
-        console.log(this.state)
-        this.props.onGetReports({ limit: 2, skip: this.state.skip })
-        window.scrollTo(0, 0)
-      }
-    }
   }
 
   render () {
     if (this.props.auth) {
       return (
         <div className={'listGroup'}>
-          <Slider >
-            {this.props.reports.map(report => <Report className={ListGroup} key={report._id} report={report} />)}
-          </Slider>
+          <Carousel {...this.state.settings}>
+            {this.props.reports.map(report => <div><Report className={ListGroup} key={report._id} report={report} /></div>)}
+          </Carousel>
         </div>
       )
     } else {

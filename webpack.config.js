@@ -25,7 +25,8 @@ module.exports = {
           'css-loader',
           'sass-loader'
         ]
-      }
+      },
+      { test: /\.(png|woff|woff2|eot|ttf|svg|gif)$/, loader: 'url-loader?limit=100000' }
     ]
   },
   plugins: [
