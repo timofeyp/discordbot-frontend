@@ -28,28 +28,10 @@ class Login extends Component {
   componentDidMount() {
     if (localStorage.getItem('jwtToken')) {
       axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
-      this.props.onLogin(null,{jwt: localStorage.getItem('jwtToken')})
+      this.props.onLogin(null,{jwt: localStorage.getItem('jwtToken')}, this.props.store)
     }
   }
 
-
-  onSubmit = (e) => {
-    console.log(loginToSystem)
-    // e.preventDefault();
-    // const { username, password } = this.state
-    // axios.post('/api/login',  { username, password })
-    //   .then((result) => {
-    //     localStorage.setItem('jwtToken', result.data.token)
-    //     axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
-    //     this.props.onLogin(jwt_decode(result.data.token).username)
-    //     this.props.history.push('/')
-    //   })
-    //   .catch((error) => {
-    //     if(error.response.status === 401) {
-    //       this.setState({ message: 'Login failed. Username or password not match' })
-    //     }
-    //   });
-  }
 
   onUnlogin = (e) => {
     const emptyState = { ...this.state, username: '', password: '' }
@@ -60,7 +42,7 @@ class Login extends Component {
   }
 
     render() {
-      if (!this.props.authStore.auth.loggedIn) {
+      if (!this.props.store.auth.loggedIn) {
         return (
           <Navbar.Form pullRight>
             <FormGroup bsSize='small'>
@@ -75,7 +57,7 @@ class Login extends Component {
       } else  {
         return (
           <NavItem eventKey={3} href='#'>
-            {this.props.authStore.auth.login}
+            {this.props.store.auth.login}
             {' '}
           <Button bsSize='xsmall' onClick={event => this.onUnlogin(event)}>
             <Glyphicon glyph="log-out" /> Выход
@@ -88,7 +70,7 @@ class Login extends Component {
 
 export default connect(
   state => {
-    return {authStore: state}
+    return {store: state}
   },
   dispatch => ({
     // onLogin: (login) => {
@@ -97,6 +79,6 @@ export default connect(
     onExit: () => {
       dispatch({ type: EXIT_FROM_SYSTEM })
     },
-    onLogin: (event, authData) => dispatch(loginToSystem(event, authData))
+    onLogin: (event, authData, store) => dispatch(loginToSystem(event, authData, store))
   })
 )(Login);

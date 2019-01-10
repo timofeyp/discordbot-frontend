@@ -49,7 +49,10 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "date-fns": "^1.30.1",
+    "helmet": "^3.15.0",
     "jwt-decode": "^2.2.0",
+    "moment": "^2.23.0",
     "nuka-carousel": "^4.4.5",
     "react": "^16.6.3",
     "react-animated-slider": "^1.1.4",
@@ -57,6 +60,7 @@
     "react-click-outside": "^3.0.1",
     "react-day-picker": "^7.2.4",
     "react-dom": "^16.6.3",
+    "react-helmet": "^5.2.0",
     "react-outside-click-handler": "^1.2.2",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",

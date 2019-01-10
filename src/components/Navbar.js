@@ -52,9 +52,9 @@ class Navibar extends Component {
                     </NavDropdown>
                   </Nav>
                 </Col>
-                <Col sm={12}>
-                  <Tab.Content animation>
-                    <Tab.Pane eventKey="first"><Calendar/></Tab.Pane>
+                <Col  sm={12}>
+                  <Tab.Content  animation>
+                    <Tab.Pane eventKey="first"><div className={'tab-pane-first'}><Calendar/><div id={'select-menu'}><SelectMenu/></div></div></Tab.Pane>
                     <Tab.Pane eventKey="second"><SelectMenu/></Tab.Pane>
                     <Tab.Pane eventKey="3.1">Tab 3.1 content</Tab.Pane>
                     <Tab.Pane eventKey="3.2">Tab 3.2 content</Tab.Pane>

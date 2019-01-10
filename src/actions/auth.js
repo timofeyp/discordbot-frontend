@@ -7,7 +7,7 @@ export const LOGIN_TO_SYSTEM = 'LOGIN_TO_SYSTEM'
 export const EXIT_FROM_SYSTEM = 'EXIT_FROM_SYSTEM'
 export const LOGIN_TO_SYSTEM_SUCCESS = 'LOGIN_TO_SYSTEM_SUCCESS'
 
-export function loginToSystem (e, auth, callback) {
+export function loginToSystem (e, auth, store) {
   if (auth.jwt) {
     return dispatch => {
       dispatch({
@@ -21,7 +21,7 @@ export function loginToSystem (e, auth, callback) {
             type: LOGIN_TO_SYSTEM_SUCCESS,
             payload: jwt_decode(result.data.token).username // ДИСПАТЧИМ ЛОГИН
           })
-          afterLogin(dispatch)
+          afterLogin(dispatch, store.requestConditions)
         })
     }
   } else {
@@ -45,19 +45,7 @@ export function loginToSystem (e, auth, callback) {
   }
 }
 
-const afterLogin = (dispatch) => {
-  getReports(dispatch, { date: {
-      start: {
-        year: 2018,
-        month: 11,
-        day: 1
-      },
-      end: {
-        year: 2018,
-        month: 11,
-        day: 30
-      } },
-    page: 1
-  })
+const afterLogin = (dispatch, requestConditions) => {
+  getReports(dispatch, requestConditions)
   getDiscordUsers(dispatch)
 }
