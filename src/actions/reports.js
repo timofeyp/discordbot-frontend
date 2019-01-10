@@ -8,5 +8,6 @@ export const getReports = async (dispatch, conditions) => {
   // reports.data.sort((a, b) => {
   //   return new Date(b.created) - new Date(a.created)
   // })
+  console.log(reports.data)
   dispatch({ type: PULL_REPORTS_FROM_DB, payload: reports.data.docs })
 }

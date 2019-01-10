@@ -14,11 +14,17 @@ import 'react-animated-slider/build/horizontal.css'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-class ReportList extends Component {
+class ReportsCarousel extends Component {
+  shouldComponentUpdate (nextProps, nextState, nextContext) {
+    console.log(nextState)
+    return true
+  }
+
   constructor (props) {
     super(props)
 
-    this.state = { skip: 0,
+    this.state = {
+      skip: 0,
       slideIndex: 0,
       settings: {
         dots: false,
@@ -26,7 +32,11 @@ class ReportList extends Component {
         infinite: true,
         speed: 500,
         slidesToShow: 1,
-        slidesToScroll: 1
+        slidesToScroll: 1,
+        afterChange: (index) => {
+          this.setState({ slideIndex: (index + 1)} )
+          console.log(this.state)
+        }
       }
     }
   }
@@ -56,9 +66,10 @@ class ReportList extends Component {
 export default connect(
   state => ({
     auth: state.auth.loggedIn,
-    reports: state.reports
+    reports: state.reports,
+    pages: state.requestConditions.pages
   }),
   dispatch => ({
     onGetReports: (conditions) => getReports(dispatch, conditions)
   })
-)(ReportList)
+)(ReportsCarousel)

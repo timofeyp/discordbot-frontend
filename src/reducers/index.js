@@ -9,5 +9,5 @@ export default combineReducers({
   auth,
   reports,
   discordUsers,
-  requestConditions
+  requestConditions,
 })

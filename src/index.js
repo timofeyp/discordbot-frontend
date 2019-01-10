@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
-import ReportList from './components/ReportList'
+import ReportList from './components/ReportsCarousel'
 import Navibar from './components/Navbar'
 import SelectMenu from './components/SelectMenu'
 

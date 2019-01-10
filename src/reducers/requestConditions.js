@@ -1,11 +1,12 @@
-import { CHANGE_REQUEST_CONDITIONS_AUTHORS, CHANGE_REQUEST_CONDITIONS_DATE_START, CHANGE_REQUEST_CONDITIONS_DATE_END,CHANGE_REQUEST_CONDITIONS_LIMIT, CHANGE_REQUEST_CONDITIONS_PAGE } from '../actions/requestConditions'
+import { CHANGE_REQUEST_CONDITIONS_AUTHORS, CHANGE_REQUEST_CONDITIONS_DATE_START, CHANGE_REQUEST_CONDITIONS_DATE_END,CHANGE_REQUEST_CONDITIONS_LIMIT, CHANGE_REQUEST_CONDITIONS_PAGE, CHANGE_REQUEST_CONDITIONS_PAGES } from '../actions/requestConditions'
 import moment from 'moment'
 
 const initialState = {
   startDate: moment().subtract(1, 'weeks').utcOffset(3, true).toDate(),
   endDate: moment().utcOffset(3, true).toDate(),
   page: 1,
-  limit: 25
+  limit: 25,
+  pages: null
 }
 
 const requestConditions = (state = initialState, action) => {
@@ -35,6 +36,9 @@ const requestConditions = (state = initialState, action) => {
       break
     case CHANGE_REQUEST_CONDITIONS_PAGE:
       return { ...state, page: action.payload }
+      break
+    case CHANGE_REQUEST_CONDITIONS_PAGES:
+      return { ...state, pages: action.payload }
       break
     default:
       break
