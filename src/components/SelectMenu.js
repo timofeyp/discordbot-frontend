@@ -1,10 +1,7 @@
 import React from 'react'
 import Select from 'react-select'
-import Calendar from './Calendar'
-import axios from 'axios'
 import connect from 'react-redux/es/connect/connect'
-import { getDiscordUsers } from '../actions/discordUsers'
-import { CHANGE_REQUEST_CONDITIONS_AUTHORS } from '../actions/requestConditions'
+import { changeRequestConditionsAuthors } from '../actions/requestConditions'
 import '../styles/Select.css'
 
 
@@ -34,12 +31,19 @@ class SelectMenu extends React.Component {
     options: []
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.discordUsers !== this.props.discordUsers) {
-      const newOptions = nextProps.discordUsers.map(user => ({value: user._id, label: user.name}))
-      this.setState({ options: newOptions })
-    }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return { options: nextProps.discordUsers.map(user => ({value: user._id, label: user.name})) }
   }
+
+
+  // componentWillReceiveProps(nextProps) {
+  //   console.log(nextProps.discordUsers)
+  //   console.log(this.props.discordUsers)
+  //   if(nextProps.discordUsers !== this.props.discordUsers) {
+  //     const newOptions = nextProps.discordUsers.map(user => ({value: user._id, label: user.name}))
+  //     this.setState({ options: newOptions })
+  //   }
+  // }
 
   handleChange = async (selectedOption) => {
    // await this.props.onGetReports({ sort: { created: -1 } })
@@ -48,6 +52,8 @@ class SelectMenu extends React.Component {
     this.props.onFilterChange(filterArr)
   }
   render() {
+
+
     const { selectedOption } = this.state;
 
     return (
@@ -69,8 +75,6 @@ export default connect(
     requestConditions: state.requestConditions
   }),
   dispatch => ({
-    onFilterChange: (filterArr) => {
-      dispatch({ type: CHANGE_REQUEST_CONDITIONS_AUTHORS, payload: filterArr })
-    }
+    onFilterChange: (filterArr) => dispatch(changeRequestConditionsAuthors(filterArr))
   })
 )(SelectMenu)

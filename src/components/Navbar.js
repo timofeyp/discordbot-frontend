@@ -1,13 +1,11 @@
 import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
-import axios from 'axios'
-import { Link } from 'react-router-dom'
-import { Navbar, Nav, NavItem, Button, Tab, Col, Row, Tabs, NavDropdown, MenuItem } from 'react-bootstrap'
+import { Navbar, Nav, NavItem, Tab, Col, Row, NavDropdown, MenuItem } from 'react-bootstrap'
 import '../styles/Navbar.css'
 import Login from './Login'
 import { connect } from 'react-redux'
 import Calendar from './Calendar'
 import SelectMenu from './SelectMenu'
+import Settings from './Settings'
 import OutsideClickHandler from 'react-outside-click-handler'
 
 
@@ -16,16 +14,12 @@ class Navibar extends Component {
     super(props);
     this.myInput = React.createRef()
   }
-
   state = {
     key: null
   }
-
-
   handleSelect = (key) => {
     this.setState({ key })
   }
-
   render () {
     if (this.props.auth) {
       return (
@@ -41,9 +35,8 @@ class Navibar extends Component {
             >
               <Row className="clearfix">
                 <Col sm={12}>
-                  <Nav className={"delete-border"} bsStyle="tabs">
-                    <NavItem eventKey="first">Даты</NavItem>
-                    <NavItem eventKey="second">Пользователи</NavItem>
+                  <Nav className={"delete-border1"} bsStyle="tabs">
+                    <NavItem eventKey="first">Параметры поиска</NavItem>
                     <NavDropdown onClick={() => this.setState({key : null})} eventKey="3" title="Навигация" >
                       <MenuItem eventKey="3.1">Отчеты</MenuItem>
                       <MenuItem eventKey="3.2">Настройки</MenuItem>
@@ -57,13 +50,14 @@ class Navibar extends Component {
                     <Tab.Pane eventKey="first"><div className={'tab-pane-first'}><Calendar/><div id={'select-menu'}><SelectMenu/></div></div></Tab.Pane>
                     <Tab.Pane eventKey="second"><SelectMenu/></Tab.Pane>
                     <Tab.Pane eventKey="3.1">Tab 3.1 content</Tab.Pane>
-                    <Tab.Pane eventKey="3.2">Tab 3.2 content</Tab.Pane>
+                    <Tab.Pane eventKey="3.2"><div className={'tab-pane-first'}><Settings id={'select-menu'}/></div></Tab.Pane>
                     <Tab.Pane eventKey="3.3">Tab 3.3 content</Tab.Pane>
                     <Tab.Pane eventKey="3.4">Tab 3.4 content</Tab.Pane>
                   </Tab.Content>
                 </Col>
               </Row>
             </Tab.Container>
+
           </Navbar>
         </OutsideClickHandler>
       )
@@ -89,8 +83,5 @@ export default connect(
     auth: state.auth.loggedIn
   }),
   dispatch => ({
-    // onAddTrack: (trackName) => {
-    //   dispatch({ type: 'ADD_TRACK', payload: trackName });
-    // }
   })
 )(Navibar)

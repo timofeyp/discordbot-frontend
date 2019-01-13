@@ -1,4 +1,9 @@
-import { PULL_REPORTS_FROM_DB, FILTER_REPORTS_BY_NAME } from '../actions/reports'
+import {
+  PULL_REPORTS_FROM_DB,
+  FILTER_REPORTS_BY_NAME,
+  ADD_NEXT_PAGE_REPORTS_FROM_DB,
+  ADD_PREV_PAGE_REPORTS_FROM_DB
+} from '../actions/reports'
 
 const initialState = []
 const filterState = (state, filter) => {
@@ -10,6 +15,14 @@ const reports = (state = initialState, action) => {
   switch (action.type) {
     case PULL_REPORTS_FROM_DB:
       return action.payload
+      break
+    case ADD_NEXT_PAGE_REPORTS_FROM_DB:
+      return [ ...state, ...action.payload ]
+      break
+    case ADD_PREV_PAGE_REPORTS_FROM_DB:
+      const newArr = [ ...state ]
+      newArr.length()
+      return [ ...action.payload, ...newArr.splice(4, 4) ]
       break
     case FILTER_REPORTS_BY_NAME:
       if (action.payload.length) {

@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { getReports } from '../actions/reports'
-import DayPicker from 'react-day-picker'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 import { DateUtils } from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
@@ -12,7 +10,7 @@ import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
 import dateFnsFormat from 'date-fns/format'
 import dateFnsParse from 'date-fns/parse'
-import { CHANGE_REQUEST_CONDITIONS_DATE_START, CHANGE_REQUEST_CONDITIONS_DATE_END } from '../actions/requestConditions'
+import { changeRequestConditionsDateStart, changeRequestConditionsDateEnd } from '../actions/requestConditions'
 
 function parseDate (str, format, locale) {
   const parsed = dateFnsParse(str, format, { locale })
@@ -29,11 +27,6 @@ function formatDate (date, format, locale) {
 const FORMAT = 'D/M/YYYY'
 
 class Calendar extends Component {
-  shouldComponentUpdate (nextProps, nextState, nextContext) {
-    console.log(nextProps.requestConditions)
-    this.props.onGetNewRequestConditions(nextProps.requestConditions)
-    return true
-  }
 
   constructor (props) {
     super(props)
@@ -150,12 +143,7 @@ class Calendar extends Component {
 export default connect(
   state => ({ requestConditions: state.requestConditions }),
   dispatch => ({
-    onGetNewRequestConditions: (requestConditions) => getReports(dispatch, requestConditions),
-    onDateChangeStart: (date) => {
-      dispatch({ type: CHANGE_REQUEST_CONDITIONS_DATE_START, payload: date })
-    },
-    onDateChangeEnd: (date) => {
-      dispatch({ type: CHANGE_REQUEST_CONDITIONS_DATE_END, payload: date })
-    }
-  })
+    onDateChangeStart: (date) => dispatch(changeRequestConditionsDateStart(date)),
+    onDateChangeEnd: (date) => dispatch(changeRequestConditionsDateEnd(date))
+    })
 )(Calendar)

@@ -5,31 +5,25 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 import ReportList from './components/ReportsCarousel'
-import Navibar from './components/Navbar'
+import Root from './components/Root'
 import SelectMenu from './components/SelectMenu'
 
-import './styles/index.css'
+import './styles/root.css'
 import combineReducers from './reducers'
 import { Grid, Row, Col } from 'react-bootstrap'
+import axios from 'axios'
 
 
-const store = createStore(combineReducers, composeWithDevTools(applyMiddleware(thunk)))
+const composeEnhancers = composeWithDevTools({ trace: true, traceLimit: 25 });
+
+
+const store = createStore(combineReducers,  composeEnhancers(
+  applyMiddleware( thunk)
+))
+//const store = createStore(combineReducers, composeWithDevTools(applyMiddleware(thunk)))
 export default store
 
-
 ReactDOM.render(
-  <Provider  store={store}>
-    <div >
-      <Navibar  />
-    </div>
-    <br/>
-    <br/>
-    <div className={'root'} >
-      <div className={'report-list'}>
-        <ReportList />
-      </div>
-    </div>
-  </Provider>,
+  <Provider store={store}><Root /></Provider>,
   document.getElementById('root')
 )
-

@@ -5,14 +5,12 @@ const initialState = {
   startDate: moment().subtract(1, 'weeks').utcOffset(3, true).toDate(),
   endDate: moment().utcOffset(3, true).toDate(),
   page: 1,
-  limit: 25,
-  pages: null
+  limit: 10
 }
 
 const requestConditions = (state = initialState, action) => {
   switch (action.type) {
     case CHANGE_REQUEST_CONDITIONS_AUTHORS:
-      console.log(action)
       if (action.payload.length) {
         return { ...state, authors: action.payload }
       } else {

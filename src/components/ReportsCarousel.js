@@ -1,13 +1,8 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import axios from 'axios'
-import { Link } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import { ListGroup, ListGroupItem, Alert } from 'react-bootstrap'
-import '../styles/ReportList.css'
-import Login from './Login'
+import { ListGroup, Alert } from 'react-bootstrap'
+import '../styles/ReportCarousel.css'
 import { connect } from 'react-redux'
-import { getReports } from '../actions/reports'
+import { getNextPageReports } from '../actions/reports'
 import Report from './Report'
 import Carousel from 'react-slick'
 import 'react-animated-slider/build/horizontal.css'
@@ -15,17 +10,24 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
 class ReportsCarousel extends Component {
-  shouldComponentUpdate (nextProps, nextState, nextContext) {
-    console.log(nextState)
-    return true
+  componentDidUpdate() {
+
   }
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    if (prevProps.reports.length === 0) {
+     this.slider.slickGoTo(0)
+    }
+    return prevState
+  }
+
 
   constructor (props) {
     super(props)
-
+    this.changeSliderPage = this.changeSliderPage.bind(this)
     this.state = {
       skip: 0,
-      slideIndex: 0,
+      slideIndex: 1,
       settings: {
         dots: false,
         fade: true,
@@ -34,23 +36,27 @@ class ReportsCarousel extends Component {
         slidesToShow: 1,
         slidesToScroll: 1,
         afterChange: (index) => {
-          this.setState({ slideIndex: (index + 1)} )
-          console.log(this.state)
+          this.setState({ slideIndex : (++index) })
+          this.changeSliderPage(index)
         }
       }
     }
   }
 
-  componentWillMount () {
+  changeSliderPage (index) {
+    if ((index + 1) === this.props.reports.length) {
+      this.props.onGetNextPageReports(this.slider, this.props.reports[index]._id)
+    }
   }
 
   render () {
     if (this.props.auth) {
       return (
         <div className={'listGroup'}>
-          <Carousel {...this.state.settings}>
+          <Carousel ref={c => (this.slider = c)} {...this.state.settings}>
             {this.props.reports.map(report => <Report className={ListGroup} key={report._id} report={report} />)}
           </Carousel>
+          <div className={'status'}>{this.state.slideIndex} из {this.props.totalDocs}</div>
         </div>
       )
     } else {
@@ -67,9 +73,9 @@ export default connect(
   state => ({
     auth: state.auth.loggedIn,
     reports: state.reports,
-    pages: state.requestConditions.pages
+    totalDocs: state.pagination.totalDocs
   }),
   dispatch => ({
-    onGetReports: (conditions) => getReports(dispatch, conditions)
+    onGetNextPageReports: (slider, id) => dispatch(getNextPageReports(slider, id))
   })
 )(ReportsCarousel)

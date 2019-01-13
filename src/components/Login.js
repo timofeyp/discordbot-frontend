@@ -1,16 +1,11 @@
 import React, { Component }                                     from 'react'
-import ReactDOM                                                 from 'react-dom'
-import axios                                                    from 'axios'
-import { Link }                                                 from 'react-router-dom'
-import jwt_decode                                               from 'jwt-decode'
 import '../styles/Login.css'
 import { Navbar, FormControl, FormGroup, Button, NavItem, Glyphicon } from 'react-bootstrap'
 import { connect }                                              from 'react-redux'
-import { LOGIN_TO_SYSTEM, EXIT_FROM_SYSTEM, getReports } from '../actions/auth'
+import { EXIT_FROM_SYSTEM, getReports } from '../actions/auth'
 import { loginToSystem } from '../actions/auth'
 
 class Login extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -25,14 +20,6 @@ class Login extends Component {
     this.setState(state);
   }
 
-  componentDidMount() {
-    if (localStorage.getItem('jwtToken')) {
-      axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
-      this.props.onLogin(null,{jwt: localStorage.getItem('jwtToken')}, this.props.store)
-    }
-  }
-
-
   onUnlogin = (e) => {
     const emptyState = { ...this.state, username: '', password: '' }
     this.setState(emptyState)
@@ -42,7 +29,7 @@ class Login extends Component {
   }
 
     render() {
-      if (!this.props.store.auth.loggedIn) {
+      if (!this.props.loggedIn) {
         return (
           <Navbar.Form pullRight>
             <FormGroup bsSize='small'>
@@ -57,7 +44,7 @@ class Login extends Component {
       } else  {
         return (
           <NavItem eventKey={3} href='#'>
-            {this.props.store.auth.login}
+            {this.props.loggedIn}
             {' '}
           <Button bsSize='xsmall' onClick={event => this.onUnlogin(event)}>
             <Glyphicon glyph="log-out" /> Выход
@@ -69,16 +56,13 @@ class Login extends Component {
 }
 
 export default connect(
-  state => {
-    return {store: state}
-  },
+  state => ({
+    loggedIn: state.auth.loggedIn
+  }),
   dispatch => ({
-    // onLogin: (login) => {
-    //   dispatch({ type: LOGIN_TO_SYSTEM, payload: login })
-    // },
     onExit: () => {
       dispatch({ type: EXIT_FROM_SYSTEM })
     },
-    onLogin: (event, authData, store) => dispatch(loginToSystem(event, authData, store))
+    onLogin: (event, authData) => dispatch(loginToSystem(event, authData))
   })
 )(Login);
