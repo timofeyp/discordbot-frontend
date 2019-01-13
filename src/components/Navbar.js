@@ -36,10 +36,9 @@ class Navibar extends Component {
               <Row className="clearfix">
                 <Col sm={12}>
                   <Nav className={"delete-border1"} bsStyle="tabs">
-                    <NavItem eventKey="first">Параметры поиска</NavItem>
+                    <NavItem eventKey="find">Параметры поиска</NavItem>
                     <NavDropdown onClick={() => this.setState({key : null})} eventKey="3" title="Навигация" >
-                      <MenuItem eventKey="3.1">Отчеты</MenuItem>
-                      <MenuItem eventKey="3.2">Настройки</MenuItem>
+                      <MenuItem eventKey="param">Настройки</MenuItem>
                       <MenuItem divider />
                       <Login/>
                     </NavDropdown>
@@ -47,12 +46,8 @@ class Navibar extends Component {
                 </Col>
                 <Col  sm={12}>
                   <Tab.Content  animation>
-                    <Tab.Pane eventKey="first"><div className={'tab-pane-first'}><Calendar/><div id={'select-menu'}><SelectMenu/></div></div></Tab.Pane>
-                    <Tab.Pane eventKey="second"><SelectMenu/></Tab.Pane>
-                    <Tab.Pane eventKey="3.1">Tab 3.1 content</Tab.Pane>
-                    <Tab.Pane eventKey="3.2"><div className={'tab-pane-first'}><Settings id={'select-menu'}/></div></Tab.Pane>
-                    <Tab.Pane eventKey="3.3">Tab 3.3 content</Tab.Pane>
-                    <Tab.Pane eventKey="3.4">Tab 3.4 content</Tab.Pane>
+                    <Tab.Pane eventKey="find"><div className={'tab-pane-first'}><Calendar/><div id={'select-menu'}><SelectMenu/></div></div></Tab.Pane>
+                    <Tab.Pane eventKey="param"><div className={'tab-pane-first'}><Settings id={'select-menu'}/></div></Tab.Pane>
                   </Tab.Content>
                 </Col>
               </Row>
@@ -63,13 +58,13 @@ class Navibar extends Component {
       )
     } else {
       return (
-        <Navbar className={'form'}>
+        <Navbar fluid fixedTop className={'form'}>
           <Navbar.Header>
             <Navbar.Brand>
               <a href='#home'>DISCORD BOT MENU</a>
             </Navbar.Brand>
           </Navbar.Header>
-          <Nav pullRight className='form'>
+          <Nav pullRight >
             <Login />
           </Nav>
         </Navbar>

@@ -35,18 +35,7 @@ class SelectMenu extends React.Component {
     return { options: nextProps.discordUsers.map(user => ({value: user._id, label: user.name})) }
   }
 
-
-  // componentWillReceiveProps(nextProps) {
-  //   console.log(nextProps.discordUsers)
-  //   console.log(this.props.discordUsers)
-  //   if(nextProps.discordUsers !== this.props.discordUsers) {
-  //     const newOptions = nextProps.discordUsers.map(user => ({value: user._id, label: user.name}))
-  //     this.setState({ options: newOptions })
-  //   }
-  // }
-
   handleChange = async (selectedOption) => {
-   // await this.props.onGetReports({ sort: { created: -1 } })
     this.setState({ selectedOption })
     let filterArr = selectedOption.map(option => option.value)
     this.props.onFilterChange(filterArr)
@@ -65,7 +54,7 @@ class SelectMenu extends React.Component {
           options={this.state.options}
           isMulti={true}
         />
-    );
+    )
   }
 }
 

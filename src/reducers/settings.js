@@ -1,6 +1,11 @@
 import { GET_SETTINGS_FROM_DB } from '../actions/settings'
 
-const initialState = {}
+const initialState = {
+  pollDaysOfWeek: ' ',
+  pollHours: 0,
+  pollMinutes: 0,
+  token: ' '
+}
 
 const settings = (state = initialState, action) => {
   switch (action.type) {

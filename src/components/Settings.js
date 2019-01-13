@@ -8,12 +8,6 @@ import { setSettings } from '../actions/settings'
 class Settings extends Component {
   constructor (props, context) {
     super(props, context)
-    this.handleChange = this.handleChange.bind(this)
-    this.handleClickHoursUp = this.handleClickHoursUp.bind(this)
-    this.handleClickHoursDown = this.handleClickHoursDown.bind(this)
-    this.handleClickMinutesUp = this.handleClickMinutesUp.bind(this)
-    this.handleClickMinutesDown = this.handleClickMinutesDown.bind(this)
-    this.handleCheckbox = this.handleCheckbox.bind(this)
 
     this.state = {
       value: '',
@@ -46,7 +40,7 @@ class Settings extends Component {
     this.setState({ onlineStatus: status.data.onlineStatus })
   }
 
-  getValidationState () {
+  getValidationState = () =>  {
     const length = this.state.value.length
     if (length > 10) return 'success'
     else if (length > 5) return 'warning'
@@ -54,18 +48,17 @@ class Settings extends Component {
     return null
   }
 
-  handleChange (e) {
+  handleChange = (e) =>  {
     this.setState({ value: e.target.value })
     // this.props.settings.token
     this.props.onSettingsChange({ ...this.props.settings, token: e.target.value })
 
   }
 
-  handleCheckbox (e) {
+  handleCheckbox = (e) =>  {
     let newPollDaysOfWeek = []
     if (this.state.checkbox.includes(e)) {
       newPollDaysOfWeek = [ ...this.state.checkbox.filter(item => item !== e) ]
-      console.log(newPollDaysOfWeek)
       if (newPollDaysOfWeek.length) {
         this.props.onSettingsChange({ ...this.props.settings, pollDaysOfWeek: newPollDaysOfWeek.toString().replace(/ /g, '') })
       } else {
@@ -73,28 +66,26 @@ class Settings extends Component {
       }
     } else {
       newPollDaysOfWeek = [ ...this.state.checkbox.concat(e) ]
-      console.log(newPollDaysOfWeek)
-      console.log(newPollDaysOfWeek.toString().replace(/ /g, ''))
       this.props.onSettingsChange({ ...this.props.settings, pollDaysOfWeek: newPollDaysOfWeek.toString().replace(/ /g, '') })
     }
   }
 
-  handleClickHoursUp (e) {
+  handleClickHoursUp = (e) =>  {
     e.preventDefault()
     this.props.onSettingsChange({ ...this.props.settings, pollHours: ((this.props.settings.pollHours < 23) ? ++this.props.settings.pollHours : 0) })
   }
 
-  handleClickHoursDown (e) {
+  handleClickHoursDown = (e) =>  {
     e.preventDefault()
     this.props.onSettingsChange({ ...this.props.settings, pollHours: ((this.props.settings.pollHours > 0) ? --this.props.settings.pollHours : 23) })
   }
 
-  handleClickMinutesUp (e) {
+  handleClickMinutesUp = (e) =>  {
     e.preventDefault()
     this.props.onSettingsChange({ ...this.props.settings, pollMinutes: ((this.props.settings.pollMinutes < 59) ? ++this.props.settings.pollMinutes : 0) })
   }
 
-  handleClickMinutesDown (e) {
+  handleClickMinutesDown = (e) => {
     e.preventDefault()
     this.props.onSettingsChange({ ...this.props.settings, pollMinutes: ((this.props.settings.pollMinutes > 0) ? --this.props.settings.pollMinutes : 59) })
   }
@@ -106,7 +97,7 @@ class Settings extends Component {
           controlId='formBasicText'
           validationState={this.getValidationState()}
         >
-          <ControlLabel>Token <Glyphicon glyph='off' style={{ color: this.state.onlineStatus ? 'green' : 'red' }} /></ControlLabel>
+          <ControlLabel>Токен <Glyphicon glyph='off' style={{ color: this.state.onlineStatus ? 'green' : 'red' }} /></ControlLabel>
           <FormControl
             type='text'
             value={this.state.token}
@@ -114,7 +105,7 @@ class Settings extends Component {
             onChange={this.handleChange}
           />
           <FormControl.Feedback />
-          <HelpBlock>Validation is based on string length.</HelpBlock>
+          <HelpBlock>После ввода токена бот подключится автоматически</HelpBlock>
         </FormGroup>
         <FormGroup >
           <Checkbox inline onChange={() => this.handleCheckbox(1)} checked={this.state.checkbox.includes(1)}>Пн</Checkbox>

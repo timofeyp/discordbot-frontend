@@ -8,13 +8,17 @@ export const SET_SETTINGS = 'SET_SETTINGS'
 export const getSettings = (dispatch) => {
   return async (dispatch, getState) => {
     const settings = await axios.get('/api/get-settings-secure')
-    dispatch({ type: GET_SETTINGS_FROM_DB, payload: settings.data })
+    console.log(settings)
+    if (!settings.data) {
+      await axios.post('/api/set-settings-secure', getState().settings)
+    } else {
+      dispatch({ type: GET_SETTINGS_FROM_DB, payload: settings.data })
+    }
     Promise.resolve()
   }
 }
 
 export const setSettings = (settings) =>  {
-  console.log(settings)
   return async (dispatch, getState) => {
     dispatch({ type: SET_SETTINGS, payload: settings })
     await axios.post('/api/set-settings-secure', settings)
