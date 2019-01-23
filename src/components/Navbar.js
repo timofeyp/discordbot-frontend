@@ -9,6 +9,7 @@ import Settings from './Settings'
 import OutsideClickHandler from 'react-outside-click-handler'
 
 
+
 class Navibar extends Component {
   constructor(props) {
     super(props);
@@ -37,11 +38,8 @@ class Navibar extends Component {
                 <Col sm={12}>
                   <Nav className={"delete-border1"} bsStyle="tabs">
                     <NavItem eventKey="find">Параметры поиска</NavItem>
-                    <NavDropdown onClick={() => this.setState({key : null})} eventKey="3" title="Навигация" >
-                      <MenuItem eventKey="param">Настройки</MenuItem>
-                      <MenuItem divider />
-                      <Login/>
-                    </NavDropdown>
+                    <NavItem eventKey="param">Настройки</NavItem>
+                    <Login/>
                   </Nav>
                 </Col>
                 <Col  sm={12}>

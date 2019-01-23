@@ -4,7 +4,9 @@ import '../styles/root.css'
 import { connect } from 'react-redux'
 import ReportList from './ReportsCarousel'
 import Navibar from './Navbar'
+import Settings from './Settings'
 import { loginToSystem } from '../actions/auth'
+import { Switch, Route, withRouter } from 'react-router-dom'
 
 class Root extends Component {
 
@@ -24,7 +26,10 @@ class Root extends Component {
         <div className={'root'}>
           <Navibar />
           <div className={'report-list'}>
-            <ReportList  />
+          <Switch>
+            <Route exact path='/' component={ReportList}/>
+            <Route path='/questions' component={Settings}/>
+          </Switch>
           </div>
         </div>
       )
@@ -32,11 +37,11 @@ class Root extends Component {
   }
 }
 
-export default connect(
+export default withRouter(connect(
   state => ({
     auth: state.auth
   }),
   dispatch => ({
     onLogin: (event, authData) => dispatch(loginToSystem(event, authData))
   })
-)(Root)
+)(Root))

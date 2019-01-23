@@ -6,7 +6,8 @@ module.exports = {
   entry: ['babel-polyfill', './src/index.js'],
   output: {
     path: path.join(__dirname, '/dist'),
-    filename: 'index-bundle.js'
+    filename: 'index-bundle.js',
+    publicPath: '/',
   },
   module: {
     rules: [
@@ -38,6 +39,7 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, "dist"),
     compress: true,
+    historyApiFallback: true,
     proxy: {
       '/api/*': {
         target: 'http://localhost:8090',

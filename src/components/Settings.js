@@ -4,6 +4,8 @@ import { FormGroup, HelpBlock, ControlLabel, FormControl, Checkbox, Col, Row, Bu
 import connect from 'react-redux/es/connect/connect'
 import '../styles/Settings.css'
 import { setSettings } from '../actions/settings'
+import Questions from './Questions'
+
 
 class Settings extends Component {
   constructor (props, context) {
@@ -115,6 +117,7 @@ class Settings extends Component {
           <Checkbox inline onChange={() => this.handleCheckbox(5)} checked={this.state.checkbox.includes(5)}>Пт</Checkbox>
           <Checkbox inline onChange={() => this.handleCheckbox(6)} checked={this.state.checkbox.includes(6)}>Сб</Checkbox>
           <Checkbox inline onChange={() => this.handleCheckbox(7)} checked={this.state.checkbox.includes(7)}>Вс</Checkbox>
+          &nbsp;
           <div className={'time-change'} >
             <ButtonToolbar>
               <ButtonGroup bsSize='small'>
@@ -135,6 +138,7 @@ class Settings extends Component {
             </ButtonToolbar>
           </div>
         </FormGroup>
+          <Questions/>
 
       </form>
     )
