@@ -47,5 +47,10 @@ module.exports = {
         changeOrigin: true
       }
     }
+  },
+  resolve: {
+    alias: {
+      src: path.resolve(__dirname, './src')
+    }
   }
 }

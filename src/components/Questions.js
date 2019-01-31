@@ -1,19 +1,12 @@
 import React, { Component } from 'react'
 import {
   FormGroup,
-  ControlLabel,
   FormControl,
   Row,
   Col,
-  Grid,
-  ButtonToolbar,
-  ButtonGroup,
-  Button,
-  Glyphicon,
-  HelpBlock
 } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import '../styles/Questions.css'
+import 'src/styles/Questions.css'
 import OutsideClickHandler from 'react-outside-click-handler'
 
 class Questions extends Component {
@@ -27,19 +20,25 @@ class Questions extends Component {
         current: '',
         prev: '',
       },
+      {
+        current: '',
+        prev: '',
+      },
     ]
   }
 
 
-  handleChangeQuestionOne = (e, n) => {
+  handleChangeQuestion = (e, n) => {
+    e.persist()
     this.setState((prevState) => {
       let { questionsCache } = prevState
       questionsCache[n].current = e.target.value
-      return questionsCache
+      console.log(questionsCache)
+
     })
   }
 
-  handleClickOutsideQuestionOne = (n) => {
+  handleClickOutsideQuestion = (n) => {
     if (this.state.questionsCache[n].prev !== this.state.questionsCache[n].current) {
       this.setState((prevState) => {
         let { questionsCache } = prevState
@@ -54,43 +53,36 @@ class Questions extends Component {
     return (
       <FormGroup>
         <Row>
-          <Col  xs={12} md={8}>
-              <OutsideClickHandler  onOutsideClick={ () => this.handleClickOutsideQuestionOne(0) } >
+          <Col  xs={12} md={12}>
+              <OutsideClickHandler  onOutsideClick={ () => this.handleClickOutsideQuestion(0) } >
                 <FormControl
                   type="text"
-                  placeholder="Enter text"
-                  onChange={e => this.handleChangeQuestionOne(e)}
+                  placeholder="Вопрос 1"
+                  onChange={e => this.handleChangeQuestion(e, 0)}
                 />
               </OutsideClickHandler>
           </Col>
-          <Col  xs={4} md={3}>
-            <HelpBlock>Вопрос 1</HelpBlock>
+        </Row>
+        <Row>
+          <Col  xs={12} md={12}>
+            <OutsideClickHandler  onOutsideClick={ () => this.handleClickOutsideQuestion(1) } >
+              <FormControl
+                type="text"
+                placeholder="Вопрос 2"
+                onChange={e => this.handleChangeQuestion(e, 1)}
+              />
+            </OutsideClickHandler>
           </Col>
         </Row>
         <Row>
-          <Col  xs={12} md={8}>
-            <FormControl
-              type="text"
-
-              placeholder="Enter text"
-
-            />
-          </Col>
-          <Col  xs={4} md={3}>
-            <HelpBlock>Вопрос 2</HelpBlock>
-          </Col>
-        </Row>
-        <Row>
-          <Col  xs={12} md={8}>
-            <FormControl
-              type="text"
-
-              placeholder="Enter text"
-
-            />
-          </Col>
-          <Col  xs={4} md={3}>
-            <HelpBlock>Вопрос 3</HelpBlock>
+          <Col  xs={12} md={12}>
+            <OutsideClickHandler  onOutsideClick={ () => this.handleClickOutsideQuestion(2) } >
+              <FormControl
+                type="text"
+                placeholder="Вопрос 3"
+                onChange={e => this.handleChangeQuestion(e, 2)}
+              />
+            </OutsideClickHandler>
           </Col>
         </Row>
       </FormGroup>

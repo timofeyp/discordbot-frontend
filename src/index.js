@@ -10,6 +10,7 @@ import './styles/root.css'
 import combineReducers from './reducers'
 
 
+
 const composeEnhancers = composeWithDevTools({ trace: true, traceLimit: 25 });
 
 
