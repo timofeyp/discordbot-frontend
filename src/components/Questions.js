@@ -6,7 +6,7 @@ import {
   Col,
 } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import 'src/styles/Questions.css'
+import 'styles/Questions.css'
 import OutsideClickHandler from 'react-outside-click-handler'
 
 class Questions extends Component {
@@ -33,8 +33,6 @@ class Questions extends Component {
     this.setState((prevState) => {
       let { questionsCache } = prevState
       questionsCache[n].current = e.target.value
-      console.log(questionsCache)
-
     })
   }
 

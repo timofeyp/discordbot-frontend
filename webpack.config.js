@@ -50,7 +50,12 @@ module.exports = {
   },
   resolve: {
     alias: {
-      src: path.resolve(__dirname, './src')
+      src: path.resolve(__dirname, './src'),
+      actions: path.resolve(__dirname, './src/actions'),
+      components: path.resolve(__dirname, './src/components'),
+      reducers: path.resolve(__dirname, './src/reducers'),
+      storage: path.resolve(__dirname, './src/storage'),
+      styles: path.resolve(__dirname, './src/styles')
     }
   }
 }

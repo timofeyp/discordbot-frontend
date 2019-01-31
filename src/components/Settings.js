@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { FormGroup, HelpBlock, ControlLabel, FormControl, Checkbox, Col, Row, ButtonGroup, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap'
 import connect from 'react-redux/es/connect/connect'
-import '../styles/Settings.css'
+import 'styles/Settings.css'
 import { setSettings } from '../actions/settings'
 import Questions from './Questions'
 

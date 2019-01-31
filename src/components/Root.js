@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import axios from 'axios'
-import '../styles/root.css'
+import 'styles/root.css'
 import { connect } from 'react-redux'
 import ReportList from './ReportsCarousel'
 import Navibar from './Navbar'

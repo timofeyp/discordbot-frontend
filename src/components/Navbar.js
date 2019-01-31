@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { Navbar, Nav, NavItem, Tab, Col, Row, NavDropdown, MenuItem } from 'react-bootstrap'
-import '../styles/Navbar.css'
+import 'styles/Navbar.css'
 import Login from './Login'
 import { connect } from 'react-redux'
 import Calendar from './Calendar'

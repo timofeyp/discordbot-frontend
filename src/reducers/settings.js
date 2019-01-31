@@ -1,4 +1,4 @@
-import { GET_SETTINGS_FROM_DB } from '../actions/settings'
+import { GET_SETTINGS_FROM_DB } from 'actions/settings'
 
 const initialState = {
   pollDaysOfWeek: ' ',

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Jumbotron } from 'react-bootstrap'
 import moment from 'moment'
-import '../styles/ReportCarousel.css'
+import 'styles/ReportCarousel.css'
 
 class Report extends Component {
   render () {

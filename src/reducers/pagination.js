@@ -1,4 +1,4 @@
-import { CHANGE_PAGINATION} from '../actions/pagination'
+import { CHANGE_PAGINATION } from 'actions/pagination'
 
 const initialState = {}
 

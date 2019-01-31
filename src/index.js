@@ -6,8 +6,8 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 import Root from './components/Root'
 import { BrowserRouter } from 'react-router-dom'
-import './styles/root.css'
-import combineReducers from './reducers'
+import 'styles/root.css'
+import combineReducers from 'reducers'
 
 
 

@@ -1,4 +1,4 @@
-import { PULL_DISCORD_USERS_FROM_DB } from '../actions/discordUsers'
+import { PULL_DISCORD_USERS_FROM_DB } from 'actions/discordUsers'
 
 const initialState = []
 

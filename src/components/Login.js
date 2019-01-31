@@ -2,8 +2,8 @@ import React, { Component }                                     from 'react'
 import '../styles/Login.css'
 import { Navbar, FormControl, FormGroup, Button, NavItem, Glyphicon } from 'react-bootstrap'
 import { connect }                                              from 'react-redux'
-import { EXIT_FROM_SYSTEM, getReports } from '../actions/auth'
-import { loginToSystem } from '../actions/auth'
+import { EXIT_FROM_SYSTEM, getReports } from 'actions/auth'
+import { loginToSystem } from 'actions/auth'
 
 class Login extends Component {
   constructor() {

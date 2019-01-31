@@ -3,7 +3,7 @@ import {
   FILTER_REPORTS_BY_NAME,
   ADD_NEXT_PAGE_REPORTS_FROM_DB,
   ADD_PREV_PAGE_REPORTS_FROM_DB
-} from '../actions/reports'
+} from 'actions/reports'
 
 const initialState = []
 const filterState = (state, filter) => {

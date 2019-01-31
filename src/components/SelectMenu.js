@@ -2,7 +2,7 @@ import React from 'react'
 import Select from 'react-select'
 import connect from 'react-redux/es/connect/connect'
 import { changeRequestConditionsAuthors } from '../actions/requestConditions'
-import '../styles/Select.css'
+import 'styles/Select.css'
 
 
 const customStyles = {

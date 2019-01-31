@@ -1,4 +1,4 @@
-import { LOGIN_TO_SYSTEM, LOGIN_TO_SYSTEM_SUCCESS, EXIT_FROM_SYSTEM, DATA_HAS_LOADED_AFTER_LOGIN } from '../actions/auth'
+import { LOGIN_TO_SYSTEM, LOGIN_TO_SYSTEM_SUCCESS, EXIT_FROM_SYSTEM, DATA_HAS_LOADED_AFTER_LOGIN } from 'actions/auth'
 
 const initialState = {
   isLoading: false,
