@@ -1,10 +1,12 @@
-import React, { Component } from 'react'
-import axios from 'axios'
+import React, { Component }                                                                                                   from 'react'
+import axios                                                                                                                  from 'axios'
 import { FormGroup, HelpBlock, ControlLabel, FormControl, Checkbox, Col, Row, ButtonGroup, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap'
-import connect from 'react-redux/es/connect/connect'
+import connect                                                                                                                from 'react-redux/es/connect/connect'
 import 'styles/Settings.css'
-import { setSettings } from '../actions/settings'
-import Questions from './Questions'
+import { setSettings }                                                                                                        from '../actions/settings'
+import Questions                                                                                                              from './Questions'
+import { compose }                                                                                                            from 'redux'
+import { reduxForm }                                                                                                          from 'redux-form'
 
 
 class Settings extends Component {
@@ -52,7 +54,6 @@ class Settings extends Component {
 
   handleChange = (e) =>  {
     this.setState({ value: e.target.value })
-    // this.props.settings.token
     this.props.onSettingsChange({ ...this.props.settings, token: e.target.value })
 
   }
@@ -139,17 +140,34 @@ class Settings extends Component {
           </div>
         </FormGroup>
           <Questions/>
-
       </form>
     )
   }
 }
 
-export default connect(
-  state => ({
-    settings: state.settings
+
+
+const mapStateToProps = state => ({
+  settings: state.settings
+});
+
+const mapDispatchToProps = dispatch => ({
+  onSettingsChange: (settings) => dispatch(setSettings(settings))
+})
+
+const Connected = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Settings);
+
+export default compose(
+  reduxForm({
+    form: 'settings',
   }),
-  dispatch => ({
-    onSettingsChange: (settings) => dispatch(setSettings(settings))
-  })
-)(Settings)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
+)(Connected);
+
+

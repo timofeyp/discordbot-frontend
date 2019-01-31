@@ -26,10 +26,7 @@ class Root extends Component {
         <div className={'root'}>
           <Navibar />
           <div className={'report-list'}>
-          <Switch>
-            <Route exact path='/' component={ReportList}/>
-            <Route path='/questions' component={Settings}/>
-          </Switch>
+            <ReportList/>
           </div>
         </div>
       )
@@ -37,11 +34,11 @@ class Root extends Component {
   }
 }
 
-export default withRouter(connect(
+export default connect(
   state => ({
     auth: state.auth
   }),
   dispatch => ({
     onLogin: (event, authData) => dispatch(loginToSystem(event, authData))
   })
-)(Root))
+)(Root)
