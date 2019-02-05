@@ -3,6 +3,8 @@ import jwt_decode from 'jwt-decode'
 import { getReports } from './reports'
 import { getDiscordUsers } from './discordUsers'
 import { getSettings } from './settings'
+import { getQuestions } from './questions'
+
 
 export const LOGIN_TO_SYSTEM = 'LOGIN_TO_SYSTEM'
 export const EXIT_FROM_SYSTEM = 'EXIT_FROM_SYSTEM'
@@ -49,6 +51,7 @@ const afterLogin = (dispatch, requestConditions) => new Promise(async resolve =>
   await getReports(dispatch, requestConditions)
   await getDiscordUsers(dispatch)
   await dispatch(getSettings())
+  await dispatch(getQuestions())
   dispatch({ type: DATA_HAS_LOADED_AFTER_LOGIN })
   resolve()
 })

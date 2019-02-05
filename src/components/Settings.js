@@ -1,12 +1,13 @@
-import React, { Component }                                                                                                   from 'react'
-import axios                                                                                                                  from 'axios'
+import React, { Component } from 'react'
+import axios from 'axios'
 import { FormGroup, HelpBlock, ControlLabel, FormControl, Checkbox, Col, Row, ButtonGroup, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap'
-import connect                                                                                                                from 'react-redux/es/connect/connect'
+import connect from 'react-redux/es/connect/connect'
 import 'styles/Settings.css'
-import { setSettings }                                                                                                        from '../actions/settings'
-import Questions                                                                                                              from './Questions'
-import { compose }                                                                                                            from 'redux'
-import { reduxForm, Field }                                                                                                          from 'redux-form'
+import { setSettings } from '../actions/settings'
+import Questions from './Questions'
+import { compose } from 'redux'
+import { reduxForm, Field } from 'redux-form'
+import OutsideClickHandler  from 'react-outside-click-handler'
 
 
 class Settings extends Component {
@@ -17,11 +18,13 @@ class Settings extends Component {
       value: '',
       checkbox: [],
       onlineStatus: false,
-      token: ''
+      tokenCurrent: '',
+      tokenPrev: ''
     }
   }
 
   componentDidMount () {
+    this.props.array.push('token', this.props.settings.token)
     this.checkStatus()
     setInterval(() => {
       this.checkStatus()
@@ -56,6 +59,17 @@ class Settings extends Component {
     this.setState({ value: e.target.value })
     this.props.onSettingsChange({ ...this.props.settings, token: e.target.value })
 
+  }
+
+  handleChangeToken = (e) => {
+    this.setState({ tokenCurrent: e.target.value })
+  }
+
+  handleClickOutsideToken = () => {
+    if (this.state.tokenPrev !== this.state.tokenCurrent) {
+      this.props.onSettingsChange({ ...this.props.settings, token: this.state.tokenCurrent })
+      this.setState({ tokenPrev: this.state.tokenCurrent })
+    }
   }
 
   handleCheckbox = (e) =>  {
@@ -101,12 +115,20 @@ class Settings extends Component {
           validationState={this.getValidationState()}
         >
           <ControlLabel>Токен <Glyphicon glyph='off' style={{ color: this.state.onlineStatus ? 'green' : 'red' }} /></ControlLabel>
-          <FormControl
-            type='text'
-            value={this.state.token}
-            placeholder='Необходимо ввести token бота'
-            onChange={this.handleChange}
-          />
+
+
+          <OutsideClickHandler  onOutsideClick={this.handleClickOutsideToken} >
+            <Field
+              className='text-input-form'
+              type='text'
+              name='token'
+              component='input'
+              value={this.state.token}
+              placeholder='Необходимо ввести token бота'
+              onChange={this.handleChangeToken}
+            />
+          </OutsideClickHandler>
+
           <FormControl.Feedback />
           <HelpBlock>После ввода токена бот подключится автоматически</HelpBlock>
         </FormGroup>

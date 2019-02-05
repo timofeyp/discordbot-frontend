@@ -1,6 +1,6 @@
 import React, { Component }                                     from 'react'
 import '../styles/Login.css'
-import { Navbar, FormControl, FormGroup, Button, NavItem, Glyphicon } from 'react-bootstrap'
+import { Navbar, FormControl, FormGroup, Button, NavItem, Glyphicon, Form } from 'react-bootstrap'
 import { connect }                                              from 'react-redux'
 import { EXIT_FROM_SYSTEM, getReports } from 'actions/auth'
 import { loginToSystem } from 'actions/auth'
@@ -33,17 +33,17 @@ class Login extends Component {
         return (
           <Navbar.Form pullRight>
             <FormGroup bsSize='small'>
-              <FormControl  type='text' placeholder='Имя' onChange={e => this.onChange(e)} name='username'/>
+              <FormControl  type='email' placeholder='Имя' onChange={e => this.onChange(e)} name='username'/>
             </FormGroup>{' '}
             <FormGroup bsSize='small'>
-              <FormControl type='text' placeholder='Пароль' onChange={e => this.onChange(e)} name='password'/>
+              <FormControl type='password' placeholder='Пароль' onChange={e => this.onChange(e)} name='password'/>
             </FormGroup>{' '}
             <Button bsSize='xsmall' onClick={e => this.props.onLogin(e, this.state)}>Вход</Button>
           </Navbar.Form>
         )
       } else  {
         return (
-          <NavItem eventKey={3} href='#'>
+          <NavItem disabled>
             {this.props.loggedIn}
             {' '}
           <Button bsSize='xsmall' onClick={event => this.onUnlogin(event)}>

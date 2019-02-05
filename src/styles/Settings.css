@@ -24,3 +24,11 @@
     flex-shrink: 1;
     flex-basis: 500px;
 }
+
+.text-input-form {
+    background-color: #fbfbfb;
+    border: 2px solid #dcdcdc;
+    border-radius: 5px;
+    width: -webkit-fill-available;
+    margin: 1px;
+}
