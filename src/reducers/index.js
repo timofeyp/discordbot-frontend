@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-
+import { reducer as formReducer } from 'redux-form';
 import auth from './auth'
 import reports from './reports'
 import discordUsers from './discordUsers'
@@ -8,6 +8,7 @@ import pagination from './pagination'
 import settings from './settings'
 
 export default combineReducers({
+  form: formReducer,
   auth,
   reports,
   discordUsers,

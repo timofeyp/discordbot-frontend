@@ -8,7 +8,6 @@ export const SET_SETTINGS = 'SET_SETTINGS'
 export const getSettings = (dispatch) => {
   return async (dispatch, getState) => {
     const settings = await axios.get('/api/get-settings-secure')
-    console.log(settings)
     if (!settings.data) {
       await axios.post('/api/set-settings-secure', getState().settings)
     } else {
@@ -20,6 +19,7 @@ export const getSettings = (dispatch) => {
 
 export const setSettings = (settings) =>  {
   return async (dispatch, getState) => {
+    console.log(getState())
     dispatch({ type: SET_SETTINGS, payload: settings })
     await axios.post('/api/set-settings-secure', settings)
     Promise.resolve()

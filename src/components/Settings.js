@@ -6,7 +6,7 @@ import 'styles/Settings.css'
 import { setSettings }                                                                                                        from '../actions/settings'
 import Questions                                                                                                              from './Questions'
 import { compose }                                                                                                            from 'redux'
-import { reduxForm }                                                                                                          from 'redux-form'
+import { reduxForm, Field }                                                                                                          from 'redux-form'
 
 
 class Settings extends Component {
@@ -139,16 +139,14 @@ class Settings extends Component {
             </ButtonToolbar>
           </div>
         </FormGroup>
-          <Questions/>
+          <Questions state={this.props.state}/>
       </form>
     )
   }
 }
 
-
-
 const mapStateToProps = state => ({
-  settings: state.settings
+  settings: state.settings,
 });
 
 const mapDispatchToProps = dispatch => ({
