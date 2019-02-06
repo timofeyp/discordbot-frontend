@@ -44,7 +44,6 @@ class Questions extends Component {
   }
 
   handleClickOutsideQuestion = (n) => {
-    console.log(n)
     if (this.state.questionsCache[n].prev !== this.state.questionsCache[n].current) {
       this.props.onQuestionChange(n, this.state.questionsCache[n].current)
       this.setState((prevState) => {

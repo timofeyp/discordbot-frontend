@@ -3,7 +3,7 @@ import moment from 'moment'
 
 const initialState = {
   startDate: moment().subtract(1, 'weeks').utcOffset(3, true).toDate(),
-  endDate: moment().utcOffset(3, true).toDate(),
+  endDate: moment().utcOffset(0, true).hour(23).minute(59).toDate(),
   page: 1,
   limit: 10
 }

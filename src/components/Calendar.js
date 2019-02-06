@@ -47,7 +47,7 @@ class Calendar extends Component {
     }
   }
   alignHours = (date) => {
-    return moment(date).utcOffset(3, true).hour(0).minute(0).toDate()
+    return moment(date).utcOffset(0, true).hour(23).minute(59).toDate()
   }
   handleFromChange (from) {
     this.props.onDateChangeStart(this.alignHours(from))
