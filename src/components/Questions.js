@@ -31,7 +31,7 @@ class Questions extends Component {
 
   componentDidMount() {
     this.props.questions.data.forEach((question) => {
-      this.props.array.push(question.num, question.text)
+      this.props.array.push(('q' + question.num), question.text)
     })
   }
 
@@ -44,6 +44,7 @@ class Questions extends Component {
   }
 
   handleClickOutsideQuestion = (n) => {
+    console.log(n)
     if (this.state.questionsCache[n].prev !== this.state.questionsCache[n].current) {
       this.props.onQuestionChange(n, this.state.questionsCache[n].current)
       this.setState((prevState) => {
@@ -62,8 +63,9 @@ class Questions extends Component {
               <Col  xs={12} md={12}>
                 <OutsideClickHandler  onOutsideClick={ () => this.handleClickOutsideQuestion(0) } >
                   <Field
+                    key={1}
                     className='text-input-form'
-                    name="1"
+                    name="q1"
                     component="input"
                     type="text"
                     placeholder="Вопрос 1"
@@ -76,8 +78,9 @@ class Questions extends Component {
               <Col  xs={12} md={12}>
                 <OutsideClickHandler  onOutsideClick={ () => this.handleClickOutsideQuestion(1) } >
                   <Field
+                    key={2}
                     className='text-input-form'
-                    name="2"
+                    name="q2"
                     component="input"
                     type="text"
                     placeholder="Вопрос 2"
@@ -90,8 +93,9 @@ class Questions extends Component {
               <Col  xs={12} md={12}>
                 <OutsideClickHandler  onOutsideClick={ () => this.handleClickOutsideQuestion(2) } >
                   <Field
+                    key={3}
                     className='text-input-form'
-                    name="3"
+                    name="q3"
                     component="input"
                     type="text"
                     placeholder="Вопрос 3"

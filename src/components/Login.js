@@ -33,20 +33,20 @@ class Login extends Component {
         return (
           <Navbar.Form pullRight>
             <FormGroup bsSize='small'>
-              <FormControl  type='email' placeholder='Имя' onChange={e => this.onChange(e)} name='username'/>
+              <FormControl className={'auth-text-input-form'} type='email' placeholder='Имя' onChange={e => this.onChange(e)} name='username'/>
             </FormGroup>{' '}
             <FormGroup bsSize='small'>
-              <FormControl type='password' placeholder='Пароль' onChange={e => this.onChange(e)} name='password'/>
+              <FormControl className={'auth-text-input-form'} type='password' placeholder='Пароль' onChange={e => this.onChange(e)} name='password'/>
             </FormGroup>{' '}
-            <Button bsSize='xsmall' onClick={e => this.props.onLogin(e, this.state)}>Вход</Button>
+            <Button className={'auth-button'} bsSize='xsmall' onClick={e => this.props.onLogin(e, this.state)}>Вход</Button>
           </Navbar.Form>
         )
       } else  {
         return (
-          <NavItem disabled>
+          <NavItem>
             {this.props.loggedIn}
             {' '}
-          <Button bsSize='xsmall' onClick={event => this.onUnlogin(event)}>
+          <Button className={'auth-button'} bsSize='xsmall' onClick={event => this.onUnlogin(event)}>
             <Glyphicon glyph="log-out" /> Выход
           </Button>
           </NavItem>

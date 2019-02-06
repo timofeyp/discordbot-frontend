@@ -15,12 +15,11 @@ class ReportsCarousel extends Component {
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
-    if (prevProps.reports.length === 0) {
+    if (prevProps.reports.length === 0 && this.slider) {
      this.slider.slickGoTo(0)
     }
     return prevState
   }
-
 
   constructor (props) {
     super(props)
@@ -56,7 +55,9 @@ class ReportsCarousel extends Component {
           <Carousel ref={c => (this.slider = c)} {...this.state.settings}>
             {this.props.reports.map(report => <Report className={ListGroup} key={report._id} report={report} />)}
           </Carousel>
-          <div className={'status'}>{this.state.slideIndex} из {this.props.totalDocs}</div>
+          {this.props.reports.length ?
+            <div className={'status'}>{this.state.slideIndex} из {this.props.totalDocs}</div> :
+            <h1 className={'status'}>Не найдено</h1>}
         </div>
       )
     } else {
