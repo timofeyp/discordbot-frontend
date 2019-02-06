@@ -46,15 +46,19 @@ class Calendar extends Component {
       this.to.getDayPicker().showMonth(from)
     }
   }
-  alignHours = (date) => {
-    return moment(date).utcOffset(0, true).hour(23).minute(59).toDate()
+  alignHours = (date, fromTo) => {
+    if ( fromTo === 'form') {
+      return moment(date).utcOffset(0, true).hour(0).minute(0).toDate()
+    } else {
+      return moment(date).utcOffset(0, true).hour(23).minute(59).toDate()
+    }
   }
   handleFromChange (from) {
-    this.props.onDateChangeStart(this.alignHours(from))
+    this.props.onDateChangeStart(this.alignHours(from, 'form'))
     this.setState({ from })
   }
   handleToChange (to) {
-    this.props.onDateChangeEnd(this.alignHours(to))
+    this.props.onDateChangeEnd(this.alignHours(to, 'to'))
     this.setState({ to }, this.showFromMonth)
   }
   render () {
