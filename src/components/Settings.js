@@ -144,9 +144,9 @@ class Settings extends Component {
           <div className={'time-change'} >
             <ButtonToolbar>
               <ButtonGroup bsSize='small'>
-                <Button onClick={(e) => this.handleClickHoursDown(e)}>-</Button>
-                <Button disabled>{this.props.settings.pollHours}</Button>
-                <Button onClick={(e) => this.handleClickHoursUp(e)}>+</Button>
+                <Button className={'auth-button'} onClick={(e) => this.handleClickHoursDown(e)}>-</Button>
+                <Button className={'auth-button'} disabled>{this.props.settings.pollHours}</Button>
+                <Button className={'auth-button'} onClick={(e) => this.handleClickHoursUp(e)}>+</Button>
               </ButtonGroup>
             </ButtonToolbar>
             &nbsp;
@@ -154,9 +154,9 @@ class Settings extends Component {
             &nbsp;
             <ButtonToolbar>
               <ButtonGroup bsSize='small'>
-                <Button onClick={(e) => this.handleClickMinutesDown(e)}>-</Button>
-                <Button disabled>{this.props.settings.pollMinutes}</Button>
-                <Button onClick={(e) => this.handleClickMinutesUp(e)}>+</Button>
+                <Button className={'auth-button'} onClick={(e) => this.handleClickMinutesDown(e)}>-</Button>
+                <Button className={'auth-button'} disabled>{this.props.settings.pollMinutes}</Button>
+                <Button className={'auth-button'} onClick={(e) => this.handleClickMinutesUp(e)}>+</Button>
               </ButtonGroup>
             </ButtonToolbar>
           </div>
